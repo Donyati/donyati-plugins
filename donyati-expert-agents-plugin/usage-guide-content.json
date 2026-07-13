@@ -1,0 +1,303 @@
+{
+  "title": "Donyati Expert Agents — Plugin Usage Guide",
+  "subtitle": "Setup and usage in Claude Code, Claude Desktop, and claude.ai web",
+  "client": "Donyati Internal",
+  "date": "May 2026",
+  "type": "guide",
+  "confidential": false,
+  "header_text": "Donyati Expert Agents — Plugin Usage Guide v2.1",
+  "footer_text": "© 2026 Donyati, LLC. Internal use only.",
+  "sections": [
+    {
+      "heading": "1. What this plugin does",
+      "level": 1,
+      "content": [
+        {"type": "metrics", "items": [
+          {"value": "26+", "label": "Platforms covered", "style": "primary"},
+          {"value": "3", "label": "Claude surfaces supported", "style": "accent"},
+          {"value": "8", "label": "MCP tools available", "style": "success"}
+        ]},
+        {"type": "paragraph", "text": "The plugin connects Claude (Code, Desktop, or web) to Donyati's Expert Agents platform (expert-agents.donyati.com). You get expert consultations, multi-agent comparisons, document summarization, knowledge search, and identity verification — same backend across all three surfaces."},
+        {"type": "bullets", "items": [
+          "Expert consultations — ask any of 26+ platform specialists a question",
+          "Multi-agent comparisons — get unbiased platform comparisons (e.g. Snowflake vs Databricks)",
+          "Document summarization — domain-aware summaries of proposals, SOWs, transcripts",
+          "Knowledge search — pull verified citations from Donyati's curated knowledge base",
+          "Identity verification — confirm your access before relying on it"
+        ]},
+        {"type": "callout", "style": "primary", "title": "Works in three places", "text": "Claude Code gets the full plugin with /donyati-* slash commands (uses a dea_* API key). Claude Desktop (Mac/Windows app) and claude.ai web use the same MCP server as a Custom Connector — no API key needed; you sign in with your Donyati Microsoft 365 account. See Section 3 (Code) and Section 3B (Desktop / web)."}
+      ]
+    },
+    {
+      "heading": "2. Before you start",
+      "level": 1,
+      "content": [
+        {"type": "paragraph", "text": "What you need depends on which Claude you're using:"},
+        {"type": "table", "headers": ["Using", "What you need", "Auth method"], "rows": [
+          ["Claude Code", "Claude Code CLI (claude.com/claude-code), Terminal, and an API key from Matt (mjanecek@donyati.com)", "dea_* API key"],
+          ["Claude Desktop", "Claude Desktop app (claude.ai/download), Pro/Max/Team/Enterprise plan, your Donyati Azure AD login", "SSO popup"],
+          ["claude.ai web", "A browser, Pro/Max/Team/Enterprise plan, your Donyati Azure AD login", "SSO popup"]
+        ]},
+        {"type": "callout", "style": "success", "title": "Desktop and web users don't need an API key", "text": "You authenticate with your normal Donyati Microsoft 365 / Azure AD account when you add the connector. Claude Code is the only surface that uses the dea_* key system."},
+        {"type": "paragraph", "text": "If you're on Claude Code and don't have a key yet, request one from Matt with your name (used to label the key in admin logs) and the team you're on (Sales / Presales / Marketing / CS) for usage attribution. You'll typically receive the key back within a few hours."}
+      ]
+    },
+    {
+      "heading": "3. Setup — Claude Code (3 commands, 5 minutes)",
+      "level": 1,
+      "content": [
+        {"type": "paragraph", "text": "You'll run one command in Terminal (to save your key) and two commands inside Claude Code (to install the plugin). That's it — no git, no cloning, no path hunting. Using Claude Desktop or claude.ai web instead? Skip to Section 3B."},
+        {"type": "heading", "text": "Step 1 — Save your key (Terminal)", "level": 2},
+        {"type": "paragraph", "text": "Open Terminal and paste this one line (replace dea_paste_your_key_here with the actual key Matt sent you), then press Enter. Linux/WSL users: replace ~/.zshrc with ~/.bashrc in both spots."},
+        {"type": "callout", "style": "primary", "title": "Paste into Terminal", "text": "echo 'export DONYATI_API_KEY=\"dea_paste_your_key_here\"' >> ~/.zshrc && source ~/.zshrc"},
+        {"type": "callout", "style": "warning", "title": "Straight quotes only", "text": "When you paste, make sure the quotes are straight (\"), not curly. Email clients and Slack sometimes convert them. Curly quotes are the most common cause of 401 errors after install."},
+        {"type": "paragraph", "text": "To confirm the key stuck, type: echo $DONYATI_API_KEY — you should see your key printed back."},
+        {"type": "heading", "text": "Step 2 — Install the plugin (inside Claude Code)", "level": 2},
+        {"type": "paragraph", "text": "Open Claude Code (type \"claude\" in Terminal, or use whatever method you normally do). Type these two slash commands, one at a time:"},
+        {"type": "callout", "style": "info", "title": "Command 1 — add the marketplace", "text": "/plugin marketplace add matt-janecek/consulting-agents"},
+        {"type": "paragraph", "text": "Claude Code clones the marketplace internally. You don't need to know git or have a GitHub login — Claude Code handles it."},
+        {"type": "callout", "style": "info", "title": "Command 2 — install the plugin", "text": "/plugin install donyati-expert-agents@donyati-plugins"},
+        {"type": "paragraph", "text": "This registers all 7 slash commands and the MCP connection to the Expert Agents server in one shot."},
+        {"type": "heading", "text": "Step 3 — Verify", "level": 2},
+        {"type": "paragraph", "text": "Still inside Claude Code, run /donyati-setup. You should see your key name, owner email, key ID, scopes, and rate limit. If you see that, you're done — try /donyati-help to see everything. If you see an error, jump to Section 7 (Troubleshooting)."},
+        {"type": "heading", "text": "Never used Terminal before?", "level": 3},
+        {"type": "paragraph", "text": "That's fine — here's the minimum you need:"},
+        {"type": "table", "headers": ["Task", "How"], "rows": [
+          ["Open Terminal (macOS)", "⌘+Space, type \"Terminal\", press Enter"],
+          ["Open Terminal (Windows)", "Search \"WSL\" or \"Git Bash\" in Start menu"],
+          ["Paste a command", "⌘+V on Mac, Ctrl+Shift+V on Linux/WSL"],
+          ["Run a command", "Press Enter after pasting"],
+          ["See what's in your env", "Type echo $VARNAME and press Enter"]
+        ]},
+        {"type": "paragraph", "text": "That's all you need for this guide. If you get stuck at any step, screenshot the error and send to Matt."}
+      ]
+    },
+    {
+      "heading": "3B. Setup — Claude Desktop and claude.ai (web)",
+      "level": 1,
+      "content": [
+        {"type": "paragraph", "text": "Two steps, no terminal, no API key. Authentication is your normal Donyati Microsoft 365 / Azure AD login — same SSO popup you use everywhere else."},
+        {"type": "heading", "text": "Step 1 — Add the Custom Connector (Claude Desktop)", "level": 2},
+        {"type": "numbered", "items": [
+          "Open Claude Desktop, then Settings (⌘+, on Mac) → Connectors.",
+          "Click \"Add custom connector\" — you may need to expand the Advanced section.",
+          "Name: Donyati Expert Agents",
+          "Remote MCP server URL: https://expert-agents.donyati.com/api/mcp",
+          "Click Add / Connect."
+        ]},
+        {"type": "heading", "text": "Step 1 — Add the Custom Connector (claude.ai web)", "level": 2},
+        {"type": "numbered", "items": [
+          "Go to https://claude.ai → click your profile → Settings → Connectors.",
+          "Scroll to Custom Connectors → Add custom connector.",
+          "Use the same Name and URL as the Desktop steps above.",
+          "Click Add."
+        ]},
+        {"type": "heading", "text": "Step 2 — Sign in with Azure AD", "level": 2},
+        {"type": "callout", "style": "success", "title": "Your SSO session is the authentication", "text": "When you click Add/Connect, a Microsoft sign-in popup opens. Use your Donyati Microsoft 365 account — the same one you use for Outlook, Teams, and the Expert Agents web app. Approve the popup. The connector shows ~8 tools as available. There's no API key field, no Authorization header, no Bearer token to paste."},
+        {"type": "heading", "text": "Step 3 — Verify", "level": 2},
+        {"type": "callout", "style": "info", "title": "Prompt to test the connection", "text": "Start a new Claude conversation and type: \"Use the Donyati whoami tool to confirm my access.\" Claude calls the whoami tool and reports your name, email, and scopes. If you see that, you're done."},
+        {"type": "heading", "text": "How to use the tools without slash commands", "level": 2},
+        {"type": "paragraph", "text": "Just describe what you want and mention \"Donyati\" or the tool name. Claude picks the right tool. Translation table:"},
+        {"type": "table", "headers": ["Instead of (Claude Code)", "Say (Desktop / web)"], "rows": [
+          ["/donyati-ask How do you handle IC eliminations in OneStream?", "Ask the Donyati OneStream expert how they handle intercompany eliminations."],
+          ["/donyati-compare Snowflake vs Databricks for AI/ML", "Use Donyati to compare Snowflake and Databricks for AI/ML workloads."],
+          ["/donyati-summarize [SOW text]", "Summarize this SOW using the Donyati summarize tool. (paste content)"],
+          ["/donyati-knowledge predictive forecasting", "Search Donyati's knowledge base for predictive forecasting articles."],
+          ["/donyati-platforms", "List all Donyati expert platforms."],
+          ["/donyati-setup", "Use the Donyati whoami tool to confirm my access."]
+        ]},
+        {"type": "paragraph", "text": "All workflow examples in Section 5 work identically on Desktop/web — just phrase the request in plain English instead of slashes."},
+        {"type": "heading", "text": "Desktop / web troubleshooting", "level": 2},
+        {"type": "bullets", "items": [
+          "\"Couldn't reach the MCP server\" when adding the connector — typically a typo in the URL. Confirm it's exactly https://expert-agents.donyati.com/api/mcp (note /api/mcp at the end).",
+          "Microsoft sign-in popup blocked — unblock popups for claude.ai (web) or for the Claude Desktop app. The connector relies on a popup for SSO.",
+          "\"Unauthorized\" / Azure AD error after sign-in — your Microsoft account isn't in Donyati's tenant. Sign in with your @donyati.com Microsoft account, not a personal one.",
+          "No \"Custom Connectors\" option visible — your Claude plan doesn't include it. Upgrade to Pro / Max / Team / Enterprise, or fall back to Claude Code (any plan).",
+          "Tools appear but every call returns an error — the OAuth access token may have expired (24 h lifetime). Open the connector settings and reconnect — the SSO refresh is silent if you're already signed into Microsoft elsewhere."
+        ]}
+      ]
+    },
+    {
+      "heading": "4. The commands",
+      "level": 1,
+      "content": [
+        {"type": "callout", "style": "accent", "title": "Slash commands are Claude Code only", "text": "On Claude Desktop or claude.ai web, phrase the same request in plain English — see the translation table in Section 3B. Same tools, same data, same answers."},
+        {"type": "table", "headers": ["Command", "What it does", "When to use it"], "rows": [
+          ["/donyati-ask", "Ask any platform expert", "Quick fact-check, deep dive, \"what's our take on X\""],
+          ["/donyati-compare", "Multi-agent platform comparison", "Pitch prep, RFP responses, scoping"],
+          ["/donyati-summarize", "Domain-aware summarization", "Long SOW, meeting transcript, RFP packet"],
+          ["/donyati-knowledge", "Search curated knowledge base", "Pull verified citations for content"],
+          ["/donyati-platforms", "List all platforms covered", "When you don't know the right slug"],
+          ["/donyati-agents", "Full agent roster — platforms, industries, Donyati specialty agents", "When you want the complete picture, or an industry slug"],
+          ["/donyati-sow-review", "Havagi CIO-style SOW/RFP audit", "Before a SOW or RFP response goes to the client"],
+          ["/donyati-posture", "Cloud compliance posture (admin keys only)", "Security/compliance questions from a client or internal audit"],
+          ["/donyati-setup", "Verify your key", "First time, or after key rotation"],
+          ["/donyati-help", "Show all commands", "Anytime"]
+        ]},
+        {"type": "heading", "text": "/donyati-ask — ask an expert", "level": 2},
+        {"type": "paragraph", "text": "The platform is auto-detected from keywords. To force a platform, pass platform: <slug> in the prompt. Example invocations:"},
+        {"type": "bullets", "items": [
+          "/donyati-ask How do you handle intercompany eliminations in OneStream?",
+          "/donyati-ask Best Anaplan calculation strategy for a 100M-cell driver model?",
+          "/donyati-ask What's the migration path from Hyperion Planning to Oracle EPBCS?",
+          "/donyati-ask platform: snowflake — explain Cortex Search vs Cortex Analyst"
+        ]},
+        {"type": "heading", "text": "/donyati-compare — head-to-head", "level": 2},
+        {"type": "paragraph", "text": "Each platform's expert analyzes the topic independently — they don't see each other's responses — then a neutral synthesis layer pulls them into a fair comparison. Output is grounded in Donyati's knowledge base, not vendor marketing."},
+        {"type": "bullets", "items": [
+          "/donyati-compare Snowflake vs Databricks for AI/ML workloads",
+          "/donyati-compare Anaplan vs Workday Adaptive vs Planful for FP&A",
+          "/donyati-compare SAP S/4HANA vs Oracle Fusion ERP for a mid-market manufacturer"
+        ]},
+        {"type": "heading", "text": "/donyati-summarize — domain-aware summaries", "level": 2},
+        {"type": "paragraph", "text": "Options: content_type (proposal, sow, assessment, report, general); platform (any platform slug for domain context); output (executive_summary, key_points, action_items, full). Output includes a summary, key points, and platform-specific insights."},
+        {"type": "bullets", "items": [
+          "/donyati-summarize [paste an SOW]",
+          "/donyati-summarize [paste a meeting transcript] — output: action_items",
+          "/donyati-summarize [paste an assessment report] — content_type: assessment, output: full"
+        ]},
+        {"type": "heading", "text": "/donyati-knowledge — search the knowledge base", "level": 2},
+        {"type": "paragraph", "text": "Returns up to 10 matching articles with title, platform/domain, and excerpt. Use these as vetted citations for marketing content, RFP responses, or briefings — they're sourced from Donyati's curated library, not the open web."},
+        {"type": "bullets", "items": [
+          "/donyati-knowledge intercompany eliminations",
+          "/donyati-knowledge platform: oracle-epm query: data integration",
+          "/donyati-knowledge AIH Tagetik analytics"
+        ]},
+        {"type": "heading", "text": "/donyati-platforms — list coverage", "level": 2},
+        {"type": "paragraph", "text": "No arguments. Returns the full live list of platforms with article counts. Use this when you're unsure of the platform slug to pass to /donyati-ask or /donyati-knowledge."},
+        {"type": "heading", "text": "/donyati-setup — verify your key", "level": 2},
+        {"type": "paragraph", "text": "Run this after receiving a new key, if you suspect your key was rotated, or if MCP tools start failing with auth errors."},
+        {"type": "heading", "text": "/donyati-help — command reference", "level": 2},
+        {"type": "paragraph", "text": "Shows all commands plus a preview of upcoming Phase 2+ features."}
+      ]
+    },
+    {
+      "heading": "5. Workflow examples by role",
+      "level": 1,
+      "content": [
+        {"type": "paragraph", "text": "Examples below use Claude Code slash command syntax. On Desktop / web, swap each slash command for the natural-language phrasing in Section 3B."},
+        {"type": "heading", "text": "Sales / Presales — pitch prep", "level": 2},
+        {"type": "paragraph", "text": "Scenario: You have a discovery call tomorrow with a manufacturer evaluating Anaplan and Workday Adaptive for FP&A. Workflow:"},
+        {"type": "numbered", "items": [
+          "/donyati-platforms — confirm we cover both. Note the slugs (anaplan, workday).",
+          "/donyati-compare Anaplan vs Workday Adaptive for mid-market manufacturer FP&A — emphasize sales planning and S&OP integration. Drop highlights into your prep doc.",
+          "/donyati-knowledge migration from Excel and Hyperion to Anaplan — pull vetted points for \"what does the journey look like\" if asked."
+        ]},
+        {"type": "heading", "text": "Marketing — fact-checked content", "level": 2},
+        {"type": "paragraph", "text": "Scenario: You're writing a blog post on AI features in modern FP&A platforms. Workflow:"},
+        {"type": "numbered", "items": [
+          "/donyati-knowledge query: predictive forecasting — pull articles across Anaplan PlanIQ, Workday Illuminate, Oracle EPM AI, Planful Predict.",
+          "/donyati-ask Compare Anaplan PlanIQ to Workday Illuminate for predictive forecasting — facts only, no marketing language.",
+          "/donyati-compare Snowflake Cortex AI vs Databricks AI Functions for embedded ML — generate a comparison table for a sidebar."
+        ]},
+        {"type": "heading", "text": "Customer Success — pre-call briefing", "level": 2},
+        {"type": "paragraph", "text": "Scenario: You have a check-in with a client running Oracle EPBCS. Workflow:"},
+        {"type": "numbered", "items": [
+          "/donyati-ask What are common 30-day post-launch issues with EPBCS data integration? — get expert-level talking points anchored in Donyati's experience.",
+          "/donyati-summarize [paste last week's meeting transcript] — output: action_items. Confirm what's done before the call."
+        ]},
+        {"type": "heading", "text": "Anyone — quick fact-check", "level": 2},
+        {"type": "paragraph", "text": "Scenario: You're in a conversation, someone makes a claim, you want to verify it. Two seconds, one expert, real answer. No browser tabs."},
+        {"type": "callout", "style": "accent", "title": "Example", "text": "/donyati-ask Does Workday Adaptive support row-level security on plan-input forms?"}
+      ]
+    },
+    {
+      "heading": "6. Tips & best practices",
+      "level": 1,
+      "content": [
+        {"type": "bullets", "items": [
+          "Be specific. \"Best Anaplan model design for a 50M-cell workforce planning use case in retail\" beats \"Anaplan modeling tips.\" The experts have depth — give them context.",
+          "Use /donyati-platforms first if you don't know the slug. Saves a round trip.",
+          "Combine commands. Use /donyati-knowledge to find articles, then /donyati-ask to dig into a specific one.",
+          "Comparisons need at least 2 platforms. If you say \"compare X\" with no comparator, the system will pick one for you — usually fine but you have less control.",
+          "Don't paste secrets. Anything you send to /donyati-summarize lands in our LLM logs. Same rule as the web app.",
+          "Ask follow-ups. Each command is one turn — but Claude is conversational, so you can keep asking. The expert agent doesn't carry state, but Claude (Code, Desktop, or web) does within a conversation."
+        ]}
+      ]
+    },
+    {
+      "heading": "7. Troubleshooting",
+      "level": 1,
+      "content": [
+        {"type": "paragraph", "text": "Claude Code issues are below. For Desktop / web connector issues, see the troubleshooting bullets at the end of Section 3B."},
+        {"type": "heading", "text": "DONYATI_API_KEY not set", "level": 2},
+        {"type": "paragraph", "text": "Your shell didn't pick up the export. Check by running: echo $DONYATI_API_KEY. If empty, you either forgot to open a new Terminal window after running the export, used curly quotes, or added it to the wrong file (~/.zshrc vs ~/.bashrc). Re-run the Step 1 line with straight quotes and the right file."},
+        {"type": "heading", "text": "Unauthorized / 401 errors", "level": 2},
+        {"type": "paragraph", "text": "Three possibilities:"},
+        {"type": "numbered", "items": [
+          "Key revoked — ask Matt to issue a new one.",
+          "Key has a typo — re-copy from the original message; keys have no spaces.",
+          "You're using an old EXPERT_AGENTS_API_KEY — v2 uses DONYATI_API_KEY. Re-run Step 1 with the new name."
+        ]},
+        {"type": "callout", "style": "info", "title": "Direct test", "text": "curl -H \"Authorization: Bearer $DONYATI_API_KEY\" https://expert-agents.donyati.com/api/v1/whoami — A working key returns JSON with your key id, name, owner email, and scopes."},
+        {"type": "heading", "text": "/plugin marketplace add fails", "level": 2},
+        {"type": "paragraph", "text": "If the marketplace add returns an error: check your network (the command clones from GitHub internally), and make sure you're on a recent Claude Code version (the marketplace feature is current as of late 2025). If it still fails, fall back to the MCP-only install in Section 8."},
+        {"type": "heading", "text": "Tool not found", "level": 2},
+        {"type": "paragraph", "text": "The plugin's MCP server isn't connected. Run /plugin and check the Installed tab. If donyati-expert-agents is listed but tools are missing, run /reload-plugins. If the plugin isn't there, re-run the marketplace install."},
+        {"type": "heading", "text": "Slash commands not showing up", "level": 2},
+        {"type": "paragraph", "text": "If /donyati-ask doesn't autocomplete, the plugin didn't load. Run /plugin and look at the Installed tab. If donyati-expert-agents isn't there, re-run Step 2 of Section 3. If it's there but commands don't work, run /reload-plugins."},
+        {"type": "heading", "text": "Slow responses", "level": 2},
+        {"type": "paragraph", "text": "The expert agents call out to OpenRouter; first response can take 5-15 seconds. Subsequent responses are usually faster. If responses consistently take more than 30 seconds, ping Matt — could be a model routing issue."},
+        {"type": "heading", "text": "Rate limit hit", "level": 2},
+        {"type": "paragraph", "text": "Default is 60 requests/minute per key. If you're getting rate-limited, slow down or ask Matt to bump your limit."}
+      ]
+    },
+    {
+      "heading": "8. Fallback: MCP-only install in Claude Code (no plugin)",
+      "level": 1,
+      "content": [
+        {"type": "paragraph", "text": "If the marketplace install in Section 3 gives you trouble, you can install just the MCP server in Claude Code. You'll get all eight tools but lose the /donyati-* slash command shortcuts — you'll need to call the tools by their MCP names (e.g., ask Claude Code \"use the consult tool to ask…\")."},
+        {"type": "callout", "style": "info", "title": "Run in Terminal", "text": "claude mcp add --transport http expert-agents https://expert-agents.donyati.com/api/mcp --header \"Authorization: Bearer $DONYATI_API_KEY\""},
+        {"type": "paragraph", "text": "Verify with claude mcp list — you should see expert-agents in the list. Open Claude Code and ask it to list available MCP tools."},
+        {"type": "paragraph", "text": "Note: For Claude Desktop / claude.ai web there's no plugin to begin with — the Custom Connector + SSO setup in Section 3B is the standard path, not a fallback."}
+      ]
+    },
+    {
+      "heading": "9. Privacy & data handling",
+      "level": 1,
+      "content": [
+        {"type": "callout", "style": "warning", "title": "Important", "text": "Treat the plugin like the web app. Anything you send is logged for billing, audit, and may land in the knowledge base. Don't paste anything you wouldn't paste into the web app."},
+        {"type": "bullets", "items": [
+          "API keys are scoped to you. Each teammate gets a unique key. Don't share them.",
+          "Desktop / web sign-ins are tied to your Azure AD identity. The connector's access dies if your Donyati account is deactivated.",
+          "Requests are logged. Admins can see per-user / per-key usage at /admin/api-usage.",
+          "Content you summarize/ingest is stored. Future ingest commands will stamp your owner email on every row.",
+          "Per-org scoping coming in Phase 5. For now every authenticated user has full read access. If your role shouldn't see all clients, hold ingest/summarize work until per-org scopes ship."
+        ]}
+      ]
+    },
+    {
+      "heading": "10. What's coming next",
+      "level": 1,
+      "content": [
+        {"type": "paragraph", "text": "Phase 2-4 will add the following commands. Phase 2 ships first; Phase 3 stamps your email on ingested content for Review Queue attribution; Phase 4 adds Marketing-specific tooling. SOW and RFP generation will land later, once those workstreams stabilize. All future commands will be available as MCP tools on Desktop and web as soon as they ship on Claude Code."},
+        {"type": "bullets", "items": [
+          "/donyati-brief <client> — pre-meeting briefing with project history (Phase 2)",
+          "/donyati-projects [client] — list engagements (Phase 2)",
+          "/donyati-ingest <file> — push transcripts/notes into client knowledge, stamped with your email (Phase 3)",
+          "/donyati-review-doc <file> — AI review of a draft before sending (Phase 3)",
+          "/donyati-status <project> — generate exec status updates (Phase 3)",
+          "/donyati-scope <description> — generate scoping doc (Phase 4)",
+          "/donyati-discovery <industry> — tailored discovery questions (Phase 4)",
+          "/donyati-claims <topic> — vetted citations for marketing (Phase 4)"
+        ]}
+      ]
+    },
+    {
+      "heading": "11. Getting help",
+      "level": 1,
+      "content": [
+        {"type": "bullets", "items": [
+          "Claude Code setup or auth issues → run /donyati-setup first",
+          "Desktop / web connector issues → see Section 3B troubleshooting; ask Matt to verify your Azure AD access",
+          "Bugs or feature requests → ping Matt (mjanecek@donyati.com)",
+          "Web app: https://expert-agents.donyati.com",
+          "Admin / key management (admins only): https://expert-agents.donyati.com/admin/api-keys",
+          "Usage stats (admins only): https://expert-agents.donyati.com/admin/api-usage",
+          "README: short reference at donyati-expert-agents-plugin/README.md"
+        ]},
+        {"type": "highlight_box", "text": "Welcome to v2.1 — happy consulting.", "style": "primary"}
+      ]
+    }
+  ]
+}

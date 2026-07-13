@@ -1,0 +1,24 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "donyati-plugins",
+  "description": "Donyati public plugin marketplace — Expert Agents for Claude Code",
+  "owner": {
+    "name": "Donyati",
+    "email": "consulting@donyati.com"
+  },
+  "plugins": [
+    {
+      "name": "donyati-expert-agents",
+      "description": "Access 26+ Donyati platform expert agents (Oracle, SAP, OneStream, Microsoft, Workday, Salesforce, Snowflake, Databricks, Informatica, Stibo, AWS, GCP, Tagetik, Anaplan, BlackLine, Planful, Prophix, and more) directly from Claude Code. Includes consult, compare, summarize, knowledge search, deliverables, and identity tools.",
+      "author": { "name": "Donyati" },
+      "category": "productivity",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/Donyati/donyati-plugins.git",
+        "path": "donyati-expert-agents-plugin",
+        "ref": "main"
+      },
+      "homepage": "https://expert-agents.donyati.com"
+    }
+  ]
+}

@@ -31,7 +31,7 @@ echo 'export DONYATI_API_KEY="dea_paste_your_key_here"' >> ~/.zshrc && source ~/
 Open Claude Code, then run these two slash commands:
 
 ```
-/plugin marketplace add matt-janecek/consulting-agents
+/plugin marketplace add Donyati/donyati-plugins
 /plugin install donyati-expert-agents@donyati-plugins
 ```
 
@@ -170,13 +170,14 @@ If you ingest content via the plugin, it will be stamped with your owner email s
 
 ## Releasing a new plugin version (maintainers)
 
-The marketplace installs from **GitHub `main`** (`matt-janecek/consulting-agents`, subdir
-`donyati-expert-agents-plugin/`) — NOT from Azure DevOps. The standard ship flow pushes Azure
-only, so a plugin release is not live until GitHub is synced:
+The marketplace installs from the **public repo `github.com/Donyati/donyati-plugins`** (branch
+`main`, subdir `donyati-expert-agents-plugin/`) — NOT from Azure DevOps and NOT from this
+internal repo. The standard ship flow pushes Azure only, so a plugin release is not live to
+users until the public repo is synced:
 
 1. Bump `plugin.json` version + update `CHANGELOG.md`.
 2. Ship to dev/main via the normal Azure flow.
-3. **Run `/github-backup`** (or `git push github main`) — this is the actual publish step.
+3. **Run `ORG=Donyati tools/sync-plugin-public.sh`** — copies the plugin into `Donyati/donyati-plugins` and pushes. This is the actual publish step.
 4. Users pull it with `/plugin marketplace update donyati-plugins` + re-install.
 
 ---

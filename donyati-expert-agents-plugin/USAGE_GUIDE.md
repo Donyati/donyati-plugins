@@ -73,7 +73,7 @@ You should see your key printed back. If you see nothing, the export didn't take
 Open Claude Code (just type `claude` in Terminal or use whatever method you normally do). Then type these two slash commands, one at a time:
 
 ```
-/plugin marketplace add matt-janecek/consulting-agents
+/plugin marketplace add Donyati/donyati-plugins
 ```
 
 Claude Code will clone the marketplace internally. You don't need to know git or have a GitHub login — Claude Code handles it.

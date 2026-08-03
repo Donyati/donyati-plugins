@@ -36,9 +36,20 @@ What you need depends on which Claude you're using:
 
 If you're on Claude Code and don't have a key yet, request one from Matt with:
 - Your name (used to label the key in admin logs)
-- The team you're on (Sales / Presales / Marketing / CS) — for usage attribution
+- **Your Donyati email** — every key is issued to a named owner, so your usage is attributed to you rather than landing in an anonymous bucket
+- The team you're on (Sales / Presales / Marketing / CS)
 
 You'll receive the key back, usually within a few hours.
+
+### What gets logged
+
+Worth knowing up front: **your tool calls are recorded.** Each call logs which command you ran, how long it took, and whether it succeeded, attributed to your key's owner email (Claude Code) or your signed-in Microsoft 365 account (Desktop / web).
+
+Donyati admins use this for adoption and cost reporting — who is getting value from which agents, and what each agent costs to run.
+
+To be straight with you about what that includes: for the expert-agent commands, **the question you asked is stored too** (up to the first 2,000 characters), alongside your email, the model used, and the token counts. The agent's *answer* is not stored by this telemetry. This is not new behaviour introduced by the plugin — the web app has always recorded it — but it is worth knowing when you are typing.
+
+Practical upshot: treat these commands like any other internal Donyati system. Client-confidential detail in a prompt is fine where it would be fine in the web app; it is not anonymous.
 
 ---
 
@@ -99,8 +110,11 @@ Key: matt-laptop
 Owner: matt.janecek@donyati.com
 Key ID: 12
 Scopes: (none — full access in v2)
-Rate limit: 60 req/min
+Rate limit: 60 req/min per server instance
 ```
+
+(On Claude Desktop / claude.ai web there is no API key, so the same check shows
+**User ID** and your Microsoft 365 address instead of a Key ID.)
 
 If you see that, **you're done.** Try `/donyati-help` to see everything you can do. Then skip to §4.
 
@@ -486,7 +500,9 @@ The expert agents call out to OpenRouter; first response can take 5-15 seconds. 
 
 ### Rate limit hit
 
-Default is 60 requests/minute per key. If you're getting rate-limited, slow down or ask Matt to bump your limit.
+Default is 60 requests/minute per caller, enforced per server instance. Connecting and listing tools is exempt, so reconnecting never costs you quota — only actual tool calls count.
+
+If you go over, you get an explicit "rate limit exceeded" response with a retry delay rather than a silent failure or a dropped connection. Wait the stated number of seconds and carry on, or ask Matt to raise your limit.
 
 ---
 

@@ -2,6 +2,30 @@
 
 All notable changes to the Donyati Expert Agents plugin are documented here. Version numbering follows [Semantic Versioning](https://semver.org/).
 
+## [2.4.1] — 2026-08-02
+
+Documentation release. **No command or tool changes** — the behaviour described below is
+server-side and already applies to existing installs; updating the plugin is not required to
+get it, only to read about it.
+
+### Added
+- **"What gets logged" section** (USAGE_GUIDE §2) — tool calls are recorded and attributed to
+  your key owner email or Microsoft 365 sign-in, and for expert-agent commands the question
+  text is stored (first 2,000 chars) with model and token counts. Answers are not stored by
+  that telemetry.
+- Note that Desktop / web verification shows a **User ID** rather than a Key ID, since there
+  is no API key on that surface.
+
+### Changed
+- **Rate limits are now actually enforced** on the MCP endpoint. They were advertised in
+  `whoami` but never applied. Documented the real behaviour: 60 req/min per caller per server
+  instance, connect/tools-list exempt, explicit 429 with a retry delay instead of a silent
+  failure.
+- `/donyati-setup` sample output updated to match (`60 req/min per server instance`).
+- Key requests should now include your Donyati email — every key is issued to a named owner so
+  usage attributes to a person instead of an anonymous bucket.
+- Usage guide document metadata refreshed (was stamped v2.1 / May 2026).
+
 ## [2.4.0] — 2026-07-12
 
 ### Added

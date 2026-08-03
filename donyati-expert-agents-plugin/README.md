@@ -158,6 +158,10 @@ Per-caller RBAC is now live — your key or account only sees the client organiz
 
 If you ingest content via the plugin, it will be stamped with your owner email so admins can attribute submissions in the Review Queue.
 
+**Usage is logged.** Every tool call records the tool name, response time, and outcome, attributed to your key's owner email (Claude Code) or your signed-in Microsoft 365 account (Desktop / web). For the expert-agent commands the question you asked is also stored (first 2,000 characters) with your email, model, and token counts — the answer is not. Donyati admins use this for adoption and cost reporting. See USAGE_GUIDE.md §2 "What gets logged".
+
+A per-caller rate limit applies (60 req/min per server instance; connecting and listing tools are exempt). Exceeding it returns an explicit "rate limit exceeded" response with a retry delay rather than a silent failure.
+
 ---
 
 ## Admin links (Donyati admins only)

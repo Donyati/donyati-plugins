@@ -1,6 +1,6 @@
 # Donyati Expert Agents — Reusable Prompt Templates
 
-**Version:** 2.4.0  ·  **Audience:** Sales / Presales / Marketing / Customer Success  ·  **Last updated:** 2026-07-12
+**Version:** 2.5.0  ·  **Audience:** Sales / Presales / Marketing / Customer Success  ·  **Last updated:** 2026-08-05
 
 Copy-paste prompt templates for the Donyati Expert Agents connector. Written for **Claude Desktop / claude.ai web** (plain English — Claude picks the MCP tool). Each template lists the **Claude Code** slash-command equivalent too.
 
@@ -132,7 +132,21 @@ output: <executive_summary | key_points | action_items | full>
 
 ---
 
-## 6. Knowledge-backed content & claims (Marketing)
+## 6. Designed client briefing deck
+
+**When:** you want a polished, visual PowerPoint briefing before a client meeting.
+
+```
+Use Donyati generate_deliverable to create a client briefing for organization
+<ORG ID>. Set slug to client-briefing and deck_style to designed. Return both
+the interactive deck link and the PowerPoint download link.
+```
+
+**Claude Code:** `/donyati-deliverables` — ask for a designed client briefing deck.
+
+---
+
+## 7. Knowledge-backed content & claims (Marketing)
 
 **When:** writing a blog post, RFP answer, or one-pager and you need *vetted* facts (Donyati's curated library, not the open web).
 
@@ -150,7 +164,7 @@ positions, write <FORMAT — e.g. 3 tight paragraphs / a comparison table /
 
 ---
 
-## 7. Quick expert fact-check
+## 8. Quick expert fact-check
 
 **When:** mid-conversation, someone makes a claim, you want it verified in seconds.
 
@@ -163,7 +177,7 @@ e.g. "Does Workday Adaptive support row-level security on plan-input forms?">
 
 ---
 
-## 8. Discover what's available
+## 9. Discover what's available
 
 ```
 List all Donyati expert platforms with article counts.
@@ -177,7 +191,7 @@ First-time check or after an auth error. **Claude Code:** `/donyati-setup`
 
 ---
 
-## 9. Havagi SOW review before send
+## 10. Havagi SOW review before send
 
 **When:** the SOW or RFP response is drafted and about to go to the client — you want a CIO-style gut check on scope, assumptions, and risk before it ships.
 
@@ -196,7 +210,7 @@ and a short list of edits I should make before the client sees it.
 
 `oracle-epm` · `oracle-erp` · `oracleai` · `sap` · `onestream` · `microsoft` · `microsoftai` · `workday` · `workdayai` · `salesforce` · `salesforceai` · `snowflake` · `snowflakeai` · `databricks` · `databricksai` · `informatica` · `stibo` · `aws` · `gcp` · `tagetik` · `anaplan` · `blackline` · `blacklineai` · `planful` · `prophix`
 
-Run template 8 (`list_platforms`) for the live list with article counts.
+Run template 9 (`list_platforms`) for the live list with article counts.
 
 ---
 

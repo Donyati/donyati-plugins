@@ -233,6 +233,11 @@ All workflow examples in §5 work identically on Desktop/web — by slash comman
 | `/donyati-deliverables` | List and generate deliverables for a client — 8 types: RFP response (PowerPoint), executive summary, client briefing, assessment summary, custom summary (web decks), requirements, data source inventory, response repository (Word docs) | Anytime you need a client-ready artifact fast |
 | `/donyati-rfp-response` | Generate an RFP/proposal response deck (PowerPoint) | RFP due, proposal in flight |
 
+For a more visual PowerPoint version of a client briefing, assessment summary, or custom
+summary, ask for `deck_style: designed`. The option is ignored by non-PowerPoint deliverables,
+and executive summaries stay `standard` because their denser content does not fit the designed
+deck archetypes.
+
 **Documents & setup**
 
 | Command | What it does | When to use it |

@@ -1,7 +1,7 @@
 {
   "name": "donyati-expert-agents",
   "description": "Donyati Expert Agents — AI-powered consulting expertise across 26+ platforms (Oracle, SAP, OneStream, Microsoft, Workday, Salesforce, Snowflake, Databricks, Informatica, Stibo, AWS, GCP, Tagetik, Anaplan, BlackLine, Planful, Prophix, and more) plus client knowledge access for Sales, Marketing, Presales, and Customer Success teams",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "author": {
     "name": "Donyati",
     "url": "https://donyati.com"

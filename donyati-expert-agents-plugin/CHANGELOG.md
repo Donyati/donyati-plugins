@@ -2,6 +2,13 @@
 
 All notable changes to the Donyati Expert Agents plugin are documented here. Version numbering follows [Semantic Versioning](https://semver.org/).
 
+## [2.5.0] — 2026-08-05
+
+### Added
+- **Designed briefing decks** — `generate_deliverable` now accepts the optional
+  `deck_style: designed` option for client briefings, assessment summaries, and custom
+  summaries. Executive summaries remain standard-only by design.
+
 ## [2.4.1] — 2026-08-02
 
 Documentation release. **No command or tool changes** — the behaviour described below is

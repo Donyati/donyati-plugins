@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "donyati-plugins",
-  "description": "Donyati public plugin marketplace — Expert Agents for Claude Code",
+  "description": "Donyati internal plugin marketplace — Expert Agents and related Claude Code tooling",
   "owner": {
     "name": "Donyati",
     "email": "consulting@donyati.com"
@@ -9,8 +9,10 @@
   "plugins": [
     {
       "name": "donyati-expert-agents",
-      "description": "Access 26+ Donyati platform expert agents (Oracle, SAP, OneStream, Microsoft, Workday, Salesforce, Snowflake, Databricks, Informatica, Stibo, AWS, GCP, Tagetik, Anaplan, BlackLine, Planful, Prophix, and more) directly from Claude Code. Includes consult, compare, summarize, knowledge search, deliverables, and identity tools.",
-      "author": { "name": "Donyati" },
+      "description": "Access 26+ Donyati platform expert agents (Oracle, SAP, OneStream, Microsoft, Workday, Salesforce, Snowflake, Databricks, Informatica, Stibo, AWS, GCP, Tagetik, Anaplan, BlackLine, Planful, Prophix, and more) directly from Claude Code. Includes consult, compare, summarize, knowledge search, and identity tools.",
+      "author": {
+        "name": "Donyati"
+      },
       "category": "productivity",
       "source": {
         "source": "git-subdir",
@@ -19,6 +21,21 @@
         "ref": "main"
       },
       "homepage": "https://expert-agents.donyati.com"
+    },
+    {
+      "name": "donyati-pstack",
+      "description": "Engineering and writing discipline skills for Donyati IP products — TypeScript type discipline, technical writing, blast-radius analysis, scripted verification for repos where CI is not a real gate, and eight reasoning principles. Adapted from the open-source pstack skill set for Claude Code and Azure DevOps.",
+      "author": {
+        "name": "Donyati"
+      },
+      "category": "productivity",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/Donyati/donyati-plugins.git",
+        "path": "donyati-pstack",
+        "ref": "main"
+      },
+      "homepage": "https://donyati.com"
     }
   ]
 }

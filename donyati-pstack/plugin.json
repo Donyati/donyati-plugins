@@ -1,0 +1,10 @@
+{
+  "name": "donyati-pstack",
+  "description": "Engineering and writing discipline skills for Donyati IP products \u2014 TypeScript type discipline, technical writing, blast-radius analysis, scripted verification for repos where CI is not a real gate, eight reasoning principles, and cross-family adversarial review via dispatch. Adapted from the open-source pstack skill set for Claude Code and Azure DevOps.",
+  "version": "1.1.0",
+  "author": {
+    "name": "Donyati",
+    "url": "https://donyati.com"
+  },
+  "homepage": "https://donyati.com"
+}

@@ -1,0 +1,60 @@
+donyati-pstack
+==============
+
+This plugin adapts a subset of the `pstack` skill set.
+
+Upstream project:  https://github.com/cursor/plugins/tree/main/pstack
+Upstream author:   Lauren Tan (poteto)
+Upstream license:  MIT
+Upstream commit:   60c641e4fad674784b30abcf9f8915dea39df38d (2026-08-18)
+Vendored on:       2026-08-19
+
+Of the 44 upstream skills, 14 are vendored here. The rest were excluded because they
+depend on Graphite, the GitHub API, Cursor-only host features, or a multi-model panel
+whose model identifiers do not resolve in Claude Code. See README.md for the full list
+and the reasoning.
+
+Four skills were modified from upstream:
+
+  skills/unslop/SKILL.md
+    Added `disable-model-invocation: true` and a scoping note. Upstream ships
+    `description: Cut AI tells from any writing. Must always apply.` with no guard, which
+    fires on nearly every turn and collides with the workspace rule routing client-facing
+    prose to `avoid-ai-writing`.
+
+  skills/blast-radius/SKILL.md
+    Removed references to `how`, `why`, and `arena`, none of which are vendored here.
+    Repointed PR archaeology at `az repos pr` (Azure DevOps, not GitHub) and repointed
+    multi-model review at `dispatch codex|gemini` rather than an in-harness model panel.
+
+  skills/create-verification-skill/SKILL.md
+    Output path changed from `.cursor/skills/verify-<app>/` to `.claude/skills/verify-<app>/`.
+
+  skills/show-me-your-work/SKILL.md
+    Transcript path changed from Cursor's `agent-transcripts/` layout to
+    `~/.claude/projects/<workspace-slug>/`.
+
+All other vendored files are unmodified from upstream.
+
+------------------------------------------------------------------------------
+MIT License
+
+Copyright (c) 2026 Lauren Tan
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

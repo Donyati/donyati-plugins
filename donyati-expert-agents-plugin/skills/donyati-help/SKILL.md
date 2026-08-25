@@ -34,6 +34,12 @@ This plugin connects Claude to Donyati's Expert Agents platform (`expert-agents.
 | `/donyati-upload <client>` | Add a client document (RFP, transcript, notes) to a client/project |
 | `/donyati-briefing <client> [project]` | Pull a client briefing before a meeting |
 
+## Accelerator Library (everyone)
+
+| Command | What it does |
+|---|---|
+| `/donyati-accelerators <query>` | Search delivery accelerators — reusable scripts, templates, workbooks, toolkits (filter by platform/category) |
+
 ## Deliverables (Sales / Presales)
 
 | Command | What it does |

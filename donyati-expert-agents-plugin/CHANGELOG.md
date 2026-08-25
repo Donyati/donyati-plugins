@@ -2,6 +2,22 @@
 
 All notable changes to the Donyati Expert Agents plugin are documented here. Version numbering follows [Semantic Versioning](https://semver.org/).
 
+## [2.7.0] — 2026-08-25
+
+### Added
+- **`/donyati-accelerators`** — search Donyati's delivery accelerator library: the reusable
+  scripts, templates, workbooks and toolkits consultants have already built, mostly EPM. Filter
+  by `platform:` and `category:` (`script`, `template`, `workbook`, `toolkit`, `document`). It
+  calls the new `search_accelerators` MCP tool, so it works from the desktop connector as well
+  as the CLI plugin.
+
+  The library returns **published** accelerators only. It will look empty until contributors
+  publish into it, which is expected on day one rather than a fault.
+
+**On the version number:** this release is 2.7.0 rather than 2.6.0 because 2.6.0 is already
+assigned, unshipped, to the `/donyati-interactive` skill. Reusing it would put two different
+plugins into the world under one version, so the number is skipped instead.
+
 ## [2.5.0] — 2026-08-05
 
 ### Added

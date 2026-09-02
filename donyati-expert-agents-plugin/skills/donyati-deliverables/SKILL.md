@@ -35,11 +35,27 @@ See what the connector can produce for a client and generate it.
 
 Web decks open in the interactive presentation viewer (`/presentations/{id}`); Word documents download via a sign-in-protected link.
 
+## Grounding a summary deck in an industry
+
+The four summary slugs (`executive-summary`, `client-briefing`, `assessment-summary`,
+`custom-summary`) take an optional `industry`, which pulls in that industry expert's curated
+knowledge — terminology, standard metrics, the structure a reader in that industry expects:
+
+`insurance` · `manufacturing` · `financial-services` · `healthcare` · `energy-utilities` ·
+`retail` · `consumer-products-goods` · `life-sciences` · `high-tech` ·
+`transportation-logistics` · `wholesale-distribution` · `communication-media-entertainment` ·
+`engineering-construction` · `higher-ed` · `public-sector` · `professional-services`
+
+Omit it to use the client's own industry when the platform has one recorded; pass `none` to
+turn it off. The industry corpus is background only — it never overrides the client's source
+content, and nothing in it is stated as a fact about the client.
+
 ## Examples
 
 ```
 /donyati-deliverables Acme
 /donyati-deliverables Meridian rfp
+/donyati-deliverables Joyson client-briefing   (grounded in manufacturing)
 ```
 
 For the full RFP flow use `/donyati-rfp-response`.

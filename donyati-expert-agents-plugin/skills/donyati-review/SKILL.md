@@ -24,7 +24,13 @@ Calls the `review_document` tool, which returns:
 
 ## Options
 
-- **platform** — platform slug for domain context (e.g. `oracle-epm`, `snowflake`); auto-detected if omitted
+- **platform** — slug for domain context; auto-detected if omitted. Either a vendor platform
+  (`oracle-epm`, `snowflake`, `sap`, …) or an **industry expert** (`insurance`,
+  `manufacturing`, `financial-services`, `healthcare`, `energy-utilities`, `retail`,
+  `consumer-products-goods`, `life-sciences`, `high-tech`, `transportation-logistics`,
+  `wholesale-distribution`, `communication-media-entertainment`, `engineering-construction`,
+  `higher-ed`, `public-sector`, `professional-services`) when the document is best judged
+  against how that industry actually runs its close and reporting
 - **focus** — narrow the review, e.g. `scope risk`, `technical accuracy`, `completeness`
 
 ## Examples
@@ -32,6 +38,7 @@ Calls the `review_document` tool, which returns:
 ```
 /donyati-review [paste SOW] — focus: scope risk
 /donyati-review [paste architecture doc] — platform: snowflake
+/donyati-review [paste close design doc] — platform: insurance
 /donyati-review [paste RFP response] — focus: completeness
 ```
 

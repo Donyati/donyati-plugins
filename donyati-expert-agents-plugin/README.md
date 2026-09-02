@@ -80,6 +80,7 @@ You should see your key name, owner email, and rate limit. If you do, you're don
 |---|---|
 | `/donyati-deliverables` | List and generate deliverables for a client — 8 types: RFP response (PowerPoint), executive summary, client briefing, assessment summary, custom summary (web decks), requirements, data source inventory, and response repository (Word docs) |
 | `/donyati-rfp-response` | Generate an RFP/proposal response deck (PowerPoint) |
+| `/donyati-demo-assessment` | Score a vendor demo against the client's requirement areas — evidence tier and a verified transcript citation behind every score |
 
 **Documents & setup**
 

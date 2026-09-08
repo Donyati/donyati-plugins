@@ -2,6 +2,26 @@
 
 All notable changes to the Donyati Expert Agents plugin are documented here. Version numbering follows [Semantic Versioning](https://semver.org/).
 
+## [2.9.0] — 2026-09-07
+
+### Added
+- **`/donyati-case-study`** — help writing an engagement up, for the consultant who has the story
+  and not the two documents. A case study on the platform is a linked pair: an internal account
+  that names the client and never reaches an expert agent, and a sanitized version that does. The
+  skill interviews first — pushing on what people leave out, specifically what was tried that did
+  not work, how the fix was verified, and where it fell short — then drafts the internal face in
+  full and **derives** the sanitized one from it paragraph by paragraph, which is the order that
+  produces a sanitized version worth reading. It carries the four sanitization moves from the
+  first case study in the corpus, including the one that is easy to get backwards: vendor
+  internals stay, client internals go, because sanitizing is not vagueness. **It is honest about
+  what it cannot do** — there is no MCP tool for case studies, so it does not submit, and it says
+  the real client-name scan runs at publish time against every org name in the live database
+  rather than implying it has run here. It also states up front that submitting freezes editing,
+  that a reviewer publishes rather than the author, and that the author cannot publish their own
+  case study even holding approve. **Claude Code only, deliberately**: every other command here is
+  an MCP prompt, which is what makes it appear in Desktop, so this one will not — the README says
+  that is expected rather than a broken install. (AB#6292)
+
 ## [2.7.0] — 2026-08-25
 
 ### Added

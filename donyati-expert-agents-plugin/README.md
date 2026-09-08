@@ -1,6 +1,6 @@
 # Donyati Expert Agents — Claude Plugin
 
-**v2.4.0** — Access Donyati's 26+ AI expert agents and client knowledge from **Claude Code**, **Claude Desktop**, or **claude.ai web**.
+**v2.9.0** — Access Donyati's 26+ AI expert agents and client knowledge from **Claude Code**, **Claude Desktop**, or **claude.ai web**.
 
 Built for Sales, Marketing, Presales, and Customer Success teammates who want to consult expert agents, compare platforms, summarize documents, and search Donyati's verified knowledge base directly from Claude — terminal, desktop app, or browser.
 
@@ -47,7 +47,7 @@ You should see your key name, owner email, and rate limit. If you do, you're don
 
 ---
 
-## Commands (v2.4.0)
+## Commands (v2.9.0)
 
 **Talk to experts**
 
@@ -73,6 +73,13 @@ You should see your key name, owner email, and rate limit. If you do, you're don
 | `/donyati-add-knowledge` | Record new facts into a client/project (confirmed immediately) |
 | `/donyati-briefing` | Pull a client briefing before a meeting |
 | `/donyati-upload` | Add documents (RFP, transcript, notes) to a client/project |
+| `/donyati-case-study` | Write up an engagement — drafts the internal, client-named account and the sanitized version the agents can quote **(Claude Code only — see below)** |
+
+> **`/donyati-case-study` is a Claude Code skill with no connector tool behind it.** Every other
+> command here drives an MCP tool, which is also what makes it appear in Claude Desktop. Case
+> studies have no MCP surface at all, so this one drafts the two documents locally and you paste
+> them into <https://expert-agents.donyati.com/case-studies/new>. It will not show up in Desktop,
+> and that is expected rather than a broken install.
 
 **Deliverables** (Sales / Presales)
 

@@ -1,16 +1,18 @@
 # Donyati Expert Agents — Claude Plugin
 
-**v2.9.0** — Access Donyati's 26+ AI expert agents and client knowledge from **Claude Code**, **Claude Desktop**, or **claude.ai web**.
+**v2.10.0** — Access Donyati's 26+ AI expert agents and client knowledge from **Claude Code**, **Claude Desktop**, **claude.ai web**, or **ChatGPT**.
 
 Built for Sales, Marketing, Presales, and Customer Success teammates who want to consult expert agents, compare platforms, summarize documents, and search Donyati's verified knowledge base directly from Claude — terminal, desktop app, or browser.
 
-> **Three surfaces, one backend.** Claude Code gets the full plugin with `/donyati-*` slash commands (uses a `dea_*` API key). Claude Desktop and claude.ai web use the same MCP server added as a **Custom Connector** — no API key needed; you sign in with your Donyati Microsoft 365 account. See `USAGE_GUIDE.md` §3 (Code) and §3B (Desktop / web) for setup.
+> **Four surfaces, one backend.** Claude Code gets the full plugin with `/donyati-*` slash commands (uses a `dea_*` API key). Claude Desktop, claude.ai web and **ChatGPT** use the same MCP server added as a connector — no API key needed; you sign in with your Donyati Microsoft 365 account. See `USAGE_GUIDE.md` §3 (Code), §3B (Claude Desktop / web) and §3C (ChatGPT) for setup.
+>
+> **ChatGPT caveat, up front:** the tools are identical and so are the access rules, but the `/donyati-*` slash commands do not appear there. They are MCP *prompts*, which Claude surfaces and ChatGPT does not — you ask in plain English instead. Translation table in `USAGE_GUIDE.md` §3C.
 
 ---
 
 ## Setup — Claude Code (3 commands)
 
-> Using Claude Desktop or claude.ai web? Skip to the **Claude Desktop / web** section below.
+> Using Claude Desktop, claude.ai web, or ChatGPT? Skip to the connector sections below.
 
 ### 1. Get an API key from Matt
 
@@ -47,7 +49,7 @@ You should see your key name, owner email, and rate limit. If you do, you're don
 
 ---
 
-## Commands (v2.9.0)
+## Commands (v2.10.0)
 
 **Talk to experts**
 
@@ -56,6 +58,7 @@ You should see your key name, owner email, and rate limit. If you do, you're don
 | `/donyati-ask` | Ask any platform expert (auto-routes by keywords) |
 | `/donyati-compare` | Multi-agent platform comparison with neutral synthesis |
 | `/donyati-knowledge` | Search the verified platform knowledge base |
+| `/donyati-accelerators` | Search Donyati's delivery accelerator library — scripts, templates, workbooks, toolkits |
 | `/donyati-platforms` | List all platforms we cover with article counts |
 | `/donyati-agents` | Full agent roster — platforms, industries, Donyati specialty agents |
 
@@ -70,7 +73,7 @@ You should see your key name, owner email, and rate limit. If you do, you're don
 | `/donyati-new-client` | Create a new client organization |
 | `/donyati-new-project` | Create a new project/engagement |
 | `/donyati-client-search` | Search a client/project's captured knowledge |
-| `/donyati-add-knowledge` | Record new facts into a client/project (confirmed immediately) |
+| `/donyati-add-knowledge` | Record new facts into a client/project (saved as drafts for admin review) |
 | `/donyati-briefing` | Pull a client briefing before a meeting |
 | `/donyati-upload` | Add documents (RFP, transcript, notes) to a client/project |
 | `/donyati-case-study` | Write up an engagement — drafts the internal, client-named account and the sanitized version the agents can quote **(Claude Code only — see below)** |
@@ -85,9 +88,14 @@ You should see your key name, owner email, and rate limit. If you do, you're don
 
 | Command | What it does |
 |---|---|
-| `/donyati-deliverables` | List and generate deliverables for a client — 8 types: RFP response (PowerPoint), executive summary, client briefing, assessment summary, custom summary (web decks), requirements, data source inventory, and response repository (Word docs) |
+| `/donyati-deliverables` | List and generate deliverables for a client — 11 types: RFP response (PowerPoint), executive summary, client briefing, assessment summary, custom summary (web decks), requirements, data source inventory, response repository (Word docs), plus three interactive HTML deliverables — swimlane, roadmap, architecture diagram |
 | `/donyati-rfp-response` | Generate an RFP/proposal response deck (PowerPoint) |
+| `/donyati-proposals` | Answer an RFP question by question: list proposals, read the question tree, draft grounded answers with sources, accept answers, export to Word |
+| `/donyati-interactive` | Generate an interactive HTML deliverable — swimlane, roadmap, or architecture diagram — with viewer/download/share links |
 | `/donyati-demo-assessment` | Score a vendor demo against the client's requirement areas — evidence tier and a verified transcript citation behind every score |
+| `/donyati-review-assessment` | Expert review of an assessment template's dimensions, questions and maturity levels before it's published |
+| `/donyati-assessment` | Draft a client assessment from a project's ingested material, and check the state of the ones already drafted (a consultant publishes it) |
+| `/donyati-poc` | Track a proof-of-concept or demo centrally — create one, list what exists, move it through its stages |
 
 **Documents & setup**
 
@@ -106,7 +114,7 @@ You should see your key name, owner email, and rate limit. If you do, you're don
 |---|---|
 | `/donyati-posture` | Cloud compliance posture — admin keys only |
 
-Run `/donyati-help` from inside Claude Code or Claude Desktop for the full reference. **These same commands now work as slash commands in the Claude Desktop connector** (see below).
+Run `/donyati-help` from inside Claude Code or Claude Desktop for the full reference. **These same commands work as slash commands in the Claude Desktop connector** (see below). In **ChatGPT** they are available as tools rather than slash commands — ask in plain English; see `USAGE_GUIDE.md` §3C.
 
 ---
 
@@ -129,7 +137,24 @@ Two steps, no terminal, no API key — your Donyati Microsoft 365 account *is* t
 3. Click **Add** / **Connect**. A **Microsoft sign-in popup** opens — sign in with your Donyati account (same one you use for Outlook/Teams/the Expert Agents web app). Approve. The tools and slash commands appear.
 4. **Verify:** type `/` in a new chat — you should see the `donyati-*` commands under the connector. Or say *"Use the Donyati whoami tool to confirm my access."*
 
-**Slash commands now work in Desktop too.** The connector exposes the same `/donyati-*` commands as Claude Code (`/donyati-ask`, `/donyati-compare`, `/donyati-client-search`, `/donyati-add-knowledge`, `/donyati-briefing`, `/donyati-review`, `/donyati-sow-review`, `/donyati-summarize`, `/donyati-knowledge`, `/donyati-clients`, `/donyati-projects`, `/donyati-platforms`, `/donyati-agents`, `/donyati-help`) — they fill in a short form and drive the right tool for you. You can still just describe what you want in plain English instead. Full translation table + examples in `USAGE_GUIDE.md` §3B.
+**Slash commands now work in Desktop too.** The connector exposes the same `/donyati-*` commands as Claude Code — `/donyati-ask`, `/donyati-compare`, `/donyati-knowledge`, `/donyati-accelerators`, `/donyati-platforms`, `/donyati-agents`, `/donyati-clients`, `/donyati-projects`, `/donyati-client-search`, `/donyati-add-knowledge`, `/donyati-briefing`, `/donyati-upload`, `/donyati-new-client`, `/donyati-new-project`, `/donyati-poc`, `/donyati-deliverables`, `/donyati-rfp-response`, `/donyati-proposals`, `/donyati-interactive`, `/donyati-demo-assessment`, `/donyati-assessment`, `/donyati-review-assessment`, `/donyati-review`, `/donyati-sow-review`, `/donyati-summarize`, `/donyati-start`, `/donyati-help` — they fill in a short form and drive the right tool for you. You can still just describe what you want in plain English instead. Full translation table + examples in `USAGE_GUIDE.md` §3B.
+
+---
+
+## Setup — ChatGPT
+
+Same server, same sign-in, no API key. Requires a ChatGPT plan (and, on business plans, a workspace admin) that allows custom connectors.
+
+1. **Settings → Connectors → add a custom connector / MCP server.** On some plans this sits behind a **Developer mode** or **Advanced** toggle; the exact location moves between ChatGPT releases.
+2. Fill in:
+   - **Name:** `Donyati Expert Agents`
+   - **MCP server URL:** `https://expert-agents.donyati.com/api/mcp`
+3. Connect. A **Microsoft sign-in** opens — use your Donyati account (same one you use for Outlook/Teams/the Expert Agents web app). Approve it.
+4. **Verify:** say *"Use the Donyati whoami tool to confirm my access."* You should get your name, email and scopes back.
+
+**What you get, and the one thing you don't.** Every connector tool works and your access is exactly what it is in the web app — the same client grants, the same refusals. What is missing is the `/donyati-*` slash commands, because those are MCP prompts and ChatGPT does not surface them. Ask in plain English instead: *"Search Joyson's Donyati knowledge for the close timeline."* Name the client and project in the request so the answer is grounded in that engagement rather than answered generically. Full translation table in `USAGE_GUIDE.md` §3C.
+
+If you cannot find a way to add a custom connector, that is a ChatGPT plan or workspace-admin setting rather than anything on the Donyati side. Claude Code works on any plan as a fallback.
 
 ---
 
@@ -143,7 +168,20 @@ claude mcp add --transport http expert-agents \
   --header "Authorization: Bearer $DONYATI_API_KEY"
 ```
 
-You'll get `consult`, `compare`, `summarize`, `review_document`, `review_sow`, `review_assessment`, `whoami`, `list_agents`, `list_platforms`, `list_organizations`, `create_organization`, `list_projects`, `create_engagement`, `search_knowledge`, `search_client_knowledge`, `add_client_knowledge`, `get_client_briefing`, `ingest_client_document`, `list_deliverables`, `generate_deliverable`, `search_compliance_posture`, `connect_readai`, `list_my_readai_meetings`, and `ingest_readai_meeting` — just no `/donyati-*` slash commands.
+You'll get every tool the connector serves — just no `/donyati-*` slash commands:
+
+- **Experts:** `consult`, `compare`, `summarize`, `review_document`, `review_sow`, `review_assessment`
+- **Knowledge:** `search_knowledge`, `search_client_knowledge`, `add_client_knowledge`, `ingest_client_document`, `search_accelerators`, `get_client_briefing`
+- **Clients & projects:** `list_organizations`, `create_organization`, `list_projects`, `create_engagement`, `get_lineage`
+- **POCs:** `list_pocs`, `create_poc`, `update_poc`
+- **Deliverables:** `list_deliverables`, `generate_deliverable`, `assess_vendor_demo`, `propose_assessment`
+- **Share links:** `revoke_share_links`, `create_collection_link`, `revoke_collection_link`
+- **read.ai:** `connect_readai`, `list_my_readai_meetings`, `ingest_readai_meeting`
+- **Roster & setup:** `list_agents`, `list_platforms`, `whoami`, `search_compliance_posture` (admin)
+
+Production serves 29 of these today. `get_lineage`, `propose_assessment`, `revoke_share_links`,
+`create_collection_link` and `revoke_collection_link` are on `dev` and reach plugin users only
+after the next promotion to `main` and republish.
 
 ---
 

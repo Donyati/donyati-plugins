@@ -45,3 +45,20 @@ Add an industry overlay to frame the answer in that vertical's vocabulary and st
 ```
 
 Run `/donyati-agents` to see the available industry slugs.
+
+## Working on a client
+
+`/donyati-ask` answers generically unless you tell it which client you are on. When the
+question is about a specific engagement:
+
+1. Call `list_organizations` (or run `/donyati-clients`) and take the `organizationId`.
+2. Optionally call `list_projects` for that org and take the `projectId`.
+3. Pass `organizationId` (and `projectId`) to `consult`.
+
+The answer is then grounded in that client's confirmed knowledge and their engagement wiki —
+the same context a web user gets in Chat. Never guess an id: the tool refuses an organization
+you are not granted, and you get a refusal instead of an answer.
+
+```
+/donyati-ask What did we agree on for the FCC close calendar? — client: Apex Manufacturing
+```

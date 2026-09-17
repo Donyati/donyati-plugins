@@ -43,7 +43,10 @@ Turn a demo transcript into a defensible scorecard. Calls the `assess_vendor_dem
 1. Resolve the client with `list_organizations` and the project with `list_projects`.
 2. Call `assess_vendor_demo` with just `organizationId` and `projectId` — it lists the
    client's documents with their ids so you can pick the demo transcript. Documents whose
-   text has not been extracted yet are marked; those cannot be scored.
+   text has not been extracted yet are marked; those cannot be scored. Documents an admin
+   has marked as **fixture** (demo or synthetic data) are not listed, so a seeded sample
+   transcript cannot be scored as if it were a real vendor demo. If one is missing and you
+   expect it, ask an admin to unmark it on Admin > Client Content.
 3. Call it again with `transcriptContentId`, `vendorLabel`, and `areas`:
 
    ```json
@@ -63,7 +66,9 @@ Turn a demo transcript into a defensible scorecard. Calls the `assess_vendor_dem
    ```
 
 4. You get the scorecard, the per-area evidence with citations, the Pending Validation list,
-   and follow-up questions to send the vendor — plus an assessment id and a link.
+   and follow-up questions to send the vendor — plus an assessment id, a link to the in-app
+   viewer, and a Word export link (requires Donyati sign-in — the connector doesn't carry a
+   browser session, so a plugin user who clicks it lands on a sign-in page first).
 5. Pass that id back as `assessmentId` any time to re-read the scorecard.
 
 ## Arguments
@@ -76,8 +81,9 @@ Turn a demo transcript into a defensible scorecard. Calls the `assess_vendor_dem
 | `notesContentId` | Optional consultant notes. Citations may quote these too |
 | `vendorLabel` | The vendor being evaluated, e.g. `Anaplan` |
 | `incumbentLabel` | Optional — what to write the positioning section against |
+| `title` | Optional. Defaults to "`<vendor>` demo — requirements fit" |
 | `areas` | The requirement areas, in report order. `weight` defaults to `important`. See below on `detail` |
-| `list` | `true` lists the scorecards already generated for this client/project |
+| `list` | `true` lists the scorecards already generated for that project. **`projectId` is required with it** — a listing is per project, not per client |
 | `assessmentId` | Re-read an existing scorecard, or correct it when `operation` is set |
 | `operation` | `edit-row`, `reweight` or `set-status` — see Correcting a scorecard |
 | `additionalInstructions` | Extra scoring guidance |
@@ -105,8 +111,28 @@ editable area list. That extraction is web-only; from the connector, pass the `d
 ## Getting the transcript in
 
 The transcript has to be a document on the client's project first. Either upload it in the
-Document Workspace, or — if the demo was a recorded call — import it with
-`/donyati-upload` or the `ingest_readai_meeting` tool, then run this.
+Document Workspace, or — if the demo was a recorded call — pull it from read.ai:
+
+1. `connect_readai` checks whether your read.ai account is linked and, if not, returns the
+   one-time browser link to connect it. Do this once; after that it just confirms you're
+   connected.
+2. `list_my_readai_meetings` lists your recent meetings (default: last 14 days, max 90) with
+   their ids, titles and dates.
+3. `ingest_readai_meeting` with a meeting id pulls the transcript in as a document on the
+   project — then run this tool against it.
+
+Or import a transcript from elsewhere with `/donyati-upload`.
+
+## Long transcripts get truncated — the reply says so first
+
+Transcript text over 120,000 characters and consultant notes over 30,000 characters are cut to
+fit the scoring prompt. When that happens the reply **opens** with `⚠️ Source truncated` and the
+exact character counts, before the title and the score, and it does so on a re-read and after a
+correction too, not only on the first generation. **Report those counts to the person you are
+answering, ahead of the scores.** Anything the vendor showed only in the cut portion is not scored —
+capabilities discussed late in a long demo can come back `not-addressed` for exactly this reason,
+not because the vendor never showed them. If a scorecard looks thin on late-demo capabilities and
+the transcript is long, check for that line before treating the gap as real.
 
 ## Correcting a scorecard
 
@@ -116,13 +142,16 @@ tool, without leaving the conversation: pass the `assessmentId` plus an `operati
 
 | `operation` | With | Does |
 |---|---|---|
-| `edit-row` | `rowId`, and any of `score`, `evidenceTier`, `assessment`, `citation`, `followUp` | Correct one capability row and recompute the scorecard around it |
+| `edit-row` | `rowId`, **and at least one** of `score`, `evidenceTier`, `assessment`, `citation`, `followUp` | Correct one capability row and recompute the scorecard around it. A bare `rowId` is refused, not treated as a no-op |
+| `undo-row` | `rowId` only | Put that row back the way it stood before its last correction |
 | `reweight` | `areaId`, `weight` | Change one area's weight; the weighted total moves, the plain mean does not |
 | `set-status` | `status: "final"` or `"draft"` | Finalize the scorecard, or reopen a final one for correction |
 
 Row and area ids come off the scorecard the tool returns. To find an assessment you generated
-earlier, call the tool with `list: true` and the client/project — it lists every scorecard with
-its id, vendor, status and weighted score.
+earlier, call the tool with `list: true` plus **both** the `organizationId` and the `projectId` —
+it lists that project's scorecards with their id, vendor, status and weighted score. A listing
+is per project on purpose: a consultant granted one project of a client is not granted the rest
+of that client's demo scorecards, so there is no client-wide listing to ask for.
 
 ```json
 { "organizationId": 36, "projectId": 71, "assessmentId": 12,
@@ -140,11 +169,38 @@ you want, since the row still needs an answer.
 `demonstrated`, `discussed` or `deferred` re-checks its citation against the transcript and
 notes. If the excerpt is not there, the row is stored one tier down — `claimed` for the first
 two, `not-addressed` for a deferral — and the reply opens with a ⚠️ notice saying so. The fix
-is to paste the real wording from the source, not to assert the tier again.
+is to paste the real wording from the source, not to assert the tier again. The scorecard names
+the tier a row **fell from** where that happened, so "recorded as Deferred and lowered to Not
+addressed" means a deferral really was asserted and could not be quoted. A `not-addressed` row
+with no such note was simply never evidenced; nothing was claimed about it.
+
+**Every correction is recorded, and the last one to a row can be undone.** Each edit stores the
+row exactly as it was, with who changed it and when, before overwriting it. `undo-row` with just
+a `rowId` puts that row back. This matters most where the edit is least recoverable: a row moved
+off `deferred` loses its score outright, and the stored pre-image is the only copy of it. The
+undo is itself recorded, so undoing twice steps two corrections back rather than ping-ponging.
+The same Undo control is on the scorecard in the web app, against any row that has been corrected.
+
+**A final scorecard is locked.** Once `set-status: "final"` has been set, `edit-row`, `undo-row`
+and `reweight` are all refused until you reopen it with `set-status: "draft"`. The reply says so
+rather than silently applying the change.
 
 **Deleting** an assessment is web-only, by design: it cascades to every row, and every row
 quotes the client's transcript verbatim. Open the link the tool returns, under Document
 Workspace → Deliverables.
+
+## Who can run it
+
+`assess_vendor_demo` needs the **Deliverables (Manage)** permission, the same one
+`generate_deliverable` needs — for every call, listing and re-reading included. Sales, Delivery
+Lead and Leadership hold it by default. Without it the tool answers with what to ask an
+administrator for and does nothing else; it does not partially run. Server integrations
+authenticating with a `dea_*` API key are exempt, because issuing the key is the authorization
+act.
+
+You also only ever see the projects you have been granted. A grant on one project of a client
+does not reach that client's other projects, on this tool or on the web — not by id, and not by
+naming the sibling project in a `list` call.
 
 ## Availability
 

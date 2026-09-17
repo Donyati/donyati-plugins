@@ -32,3 +32,19 @@ Use the `summarize` MCP tool from the `expert-agents` server to summarize docume
 - **Summary** — Main summary in the requested format
 - **Key Points** — 5-10 bullet points
 - **Platform Insights** — Technology-specific observations and recommendations
+
+## Summarizing for a specific client
+
+To have the summary written with the engagement in mind:
+
+1. Call `list_organizations` (or run `/donyati-clients`) and take the `organizationId`.
+2. Optionally call `list_projects` for that org and take the `projectId`.
+3. Pass `organizationId` (and `projectId`) to `summarize`.
+
+The summarizer sees the client's **confirmed** knowledge only — a summary is routinely pasted
+in front of the client. Never guess an id; the tool refuses an organization you are not
+granted.
+
+```
+/donyati-summarize [paste status report] — client: Apex Manufacturing, project: FCC Phase 2
+```

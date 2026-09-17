@@ -32,8 +32,11 @@ See what the connector can produce for a client and generate it.
 | `requirements` | Requirements document (Word) — requires a project |
 | `data-source-inventory` | Data source inventory (Word) — requires a project |
 | `response-repository` | Org-wide Q&A index from prior proposals (Word) |
+| `swimlane` | Process swimlane — Interactive HTML (viewer / download / share link) |
+| `roadmap` | Technology roadmap — Interactive HTML (viewer / download / share link) |
+| `architecture-diagram` | Architecture diagram — Interactive HTML (viewer / download / share link) |
 
-Web decks open in the interactive presentation viewer (`/presentations/{id}`); Word documents download via a sign-in-protected link.
+Web decks open in the interactive presentation viewer (`/presentations/{id}`); Word documents download via a sign-in-protected link. The three interactive slugs need an authored `spec` — call `list_deliverables` with the slug for the authoring guide, or use `/donyati-interactive` for the full authoring flow.
 
 ## Grounding a summary deck in an industry
 

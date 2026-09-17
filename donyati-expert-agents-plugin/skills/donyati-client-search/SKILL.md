@@ -28,6 +28,10 @@ Search what Donyati already knows about a client or a specific project.
 /donyati-client-search Joyson — project: FCCS Implementation — open risks
 ```
 
+## DDO projects
+
+If the client's project is run in Discovery to Delivery (DDO), pick it from `/donyati-projects` (it is marked *managed in DDO*) and pass its `projectId`. Approved DDO artifacts and uploaded documents are already in the knowledge base; you do not need to re-upload them. If a search returns nothing for a DDO project you are on in DDO, ask an admin to check your Expert Agents access — DDO membership is mirrored, not shared.
+
 ## Output
 
 Confirmed knowledge items only (subject, detail, category, confidence). Use these as briefing material — they reflect Donyati's captured understanding of the client, not public marketing.

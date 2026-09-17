@@ -1,16 +1,18 @@
 # Donyati Expert Agents — Plugin Usage Guide
 
-**Version:** 2.4.0  ·  **Audience:** Sales / Presales / Marketing / Customer Success  ·  **Last updated:** 2026-07-12
+**Version:** 2.10.0  ·  **Audience:** Sales / Presales / Marketing / Customer Success  ·  **Last updated:** 2026-09-17
 
 This guide walks you from "I want to use this" to "I'm getting real work done from Claude" in under five minutes. Complements the README (quick reference) with troubleshooting, role-based workflow examples, and what to do when something goes wrong.
 
-> **Works in three places.** Donyati Expert Agents runs in **Claude Code** (full plugin with `/donyati-*` slash commands, requires an API key), **Claude Desktop** (Mac/Windows app, via Custom Connector + Donyati SSO), and **claude.ai web** (also via Custom Connector + SSO). Pick whichever surface fits your workflow — same backend, same answers.
+> **Works in four places.** Donyati Expert Agents runs in **Claude Code** (full plugin with `/donyati-*` slash commands, requires an API key), **Claude Desktop** (Mac/Windows app, via Custom Connector + Donyati SSO), **claude.ai web** (also via Custom Connector + SSO), and **ChatGPT** (via connector + SSO). Pick whichever fits your workflow — same backend, same answers, same access rules.
+>
+> **On ChatGPT?** Everything works except the `/donyati-*` slash commands, which are an MCP feature Claude surfaces and ChatGPT does not. You ask in plain English instead and get the same tools. Setup is §3C.
 
 ---
 
 ## 1. What this plugin does
 
-The plugin connects **Claude** (Code, Desktop, or web) to Donyati's **Expert Agents platform** (`expert-agents.donyati.com`). You get:
+The plugin connects **Claude** (Code, Desktop, or web) to Donyati's **Expert Agents platform** (`expert-agents.donyati.com`), and the same platform is reachable from **ChatGPT** through a connector. You get:
 
 - **Expert consultations** — ask any of 26+ platform specialists a question
 - **Multi-agent comparisons** — get unbiased platform comparisons (e.g. Snowflake vs Databricks)
@@ -18,21 +20,22 @@ The plugin connects **Claude** (Code, Desktop, or web) to Donyati's **Expert Age
 - **Knowledge search** — pull verified citations from Donyati's curated knowledge base
 - **Identity verification** — confirm your access before relying on it
 
-In Claude Code these come with `/donyati-*` slash commands. In Desktop and web you invoke the same tools in plain English (e.g., *"Use the Donyati OneStream expert to..."*) — Claude picks the right tool.
+In Claude Code and the Claude Desktop / web connector these come with `/donyati-*` slash commands. Everywhere — including ChatGPT — you can invoke the same tools in plain English (e.g., *"Use the Donyati OneStream expert to..."*) and the model picks the right tool.
 
 ---
 
 ## 2. Before you start
 
-What you need depends on which Claude you're using:
+What you need depends on which client you're using:
 
 | Using | What you need | Auth method |
 |---|---|---|
 | **Claude Code** | Claude Code CLI (https://claude.com/claude-code), Terminal, **an API key from Matt** (`mjanecek@donyati.com`) | `dea_*` API key |
 | **Claude Desktop** | Claude Desktop app (https://claude.ai/download), **Pro / Max / Team / Enterprise plan**, your **Donyati Azure AD login** | SSO popup |
 | **claude.ai web** | A browser, **Pro / Max / Team / Enterprise plan**, your **Donyati Azure AD login** | SSO popup |
+| **ChatGPT** | A ChatGPT plan that allows custom connectors, your **Donyati Azure AD login** | SSO popup |
 
-**Desktop and web users do not need an API key** — you authenticate with your normal Donyati Microsoft 365 / Azure AD account when you add the connector. Claude Code is the only surface that uses the `dea_*` key system.
+**Connector users — Claude Desktop, claude.ai and ChatGPT alike — do not need an API key** — you authenticate with your normal Donyati Microsoft 365 / Azure AD account when you add the connector. Claude Code is the only surface that uses the `dea_*` key system.
 
 If you're on Claude Code and don't have a key yet, request one from Matt with:
 - Your name (used to label the key in admin logs)
@@ -43,7 +46,7 @@ You'll receive the key back, usually within a few hours.
 
 ### What gets logged
 
-Worth knowing up front: **your tool calls are recorded.** Each call logs which command you ran, how long it took, and whether it succeeded, attributed to your key's owner email (Claude Code) or your signed-in Microsoft 365 account (Desktop / web).
+Worth knowing up front: **your tool calls are recorded.** Each call logs which command you ran, how long it took, and whether it succeeded, attributed to your key's owner email (Claude Code) or your signed-in Microsoft 365 account (any connector, Claude or ChatGPT).
 
 Donyati admins use this for adoption and cost reporting — who is getting value from which agents, and what each agent costs to run.
 
@@ -200,9 +203,69 @@ All workflow examples in §5 work identically on Desktop/web — by slash comman
 
 ---
 
+## 3C. Setup — ChatGPT
+
+Same connector as Claude Desktop, same sign-in, no API key. What differs is that ChatGPT does not show the `/donyati-*` slash commands — see the note at the end of this section.
+
+### Step 1 — Add the connector
+
+1. In ChatGPT, open **Settings → Connectors** (on some plans this sits under a **Developer mode** or **Advanced** toggle; the exact place moves between releases and plans).
+2. Choose to add a **custom connector / MCP server**.
+3. Fill in:
+   - **Name:** `Donyati Expert Agents`
+   - **MCP server URL:** `https://expert-agents.donyati.com/api/mcp`
+4. Add / connect.
+
+If you cannot find a way to add a custom connector at all, your ChatGPT plan or your workspace admin does not allow them. That is a ChatGPT-side setting, not something Donyati controls — Claude Code works on any plan if you need a fallback.
+
+### Step 2 — Sign in with Azure AD
+
+A **Microsoft sign-in** opens. Use your Donyati Microsoft 365 account — the same one you use for Outlook, Teams, and the Expert Agents web app. Approve it. There is no API key field and no token to paste; your Azure AD session is the authentication.
+
+### Step 3 — Verify
+
+In a new chat:
+
+> *"Use the Donyati whoami tool to confirm my access."*
+
+You should get back your name, email, and active scopes. If that works, you're done.
+
+### How you drive it — plain English, not slash commands
+
+The `/donyati-*` commands are MCP **prompts**. Claude surfaces those; ChatGPT does not. Every command is still available to you as a **tool** — you just ask for it:
+
+| Instead of | Say |
+|---|---|
+| `/donyati-ask` | "Ask the Donyati OneStream expert how they handle intercompany eliminations." |
+| `/donyati-compare` | "Use Donyati to compare Snowflake and Databricks for AI/ML workloads." |
+| `/donyati-clients` | "List my Donyati client organizations." |
+| `/donyati-projects` | "List the Donyati projects for Joyson." |
+| `/donyati-client-search` | "Search Joyson's Donyati knowledge for the close timeline." |
+| `/donyati-add-knowledge` | "Record in Donyati that Meridian's CFO wants to go live before year end." |
+| `/donyati-briefing` | "Give me the Donyati client briefing for Meridian." |
+| `/donyati-summarize` | "Summarize this SOW using the Donyati summarize tool." *(paste content)* |
+| `/donyati-review` | "Have the Donyati expert review this SOW for scope risk." *(paste content)* |
+| `/donyati-sow-review` | "Use the Donyati review_sow tool on this SOW and give me the critical findings before I send it." *(paste content)* |
+| `/donyati-knowledge` | "Search Donyati's knowledge base for predictive forecasting articles." |
+| `/donyati-deliverables` | "Use Donyati to generate a client briefing deck for Meridian." |
+| `/donyati-platforms` | "List all Donyati expert platforms." |
+| `/donyati-agents` | "List all Donyati expert agents — platforms, industries, and specialty agents." |
+
+**Name the client and the project.** The slash commands look the client up for you; in plain English you should say it — *"using Acme's FCC project"* — so the answer is grounded in that engagement's knowledge instead of being a generic platform answer.
+
+### ChatGPT troubleshooting
+
+- **No way to add a custom connector** → your plan or workspace admin does not allow them. Nothing to fix on the Donyati side.
+- **"Couldn't reach the server"** → check the URL is exactly `https://expert-agents.donyati.com/api/mcp`, including `/api/mcp`.
+- **"Unauthorized" after sign-in** → you signed in with a personal Microsoft account. Use your `@donyati.com` one.
+- **You cannot see a client you expect** → access is your own, by Microsoft account, and identical to what you see in the web app. Connecting from ChatGPT grants nothing extra. Ask an admin for the client grant.
+- **Tools stop working after a day** → the access token has a 24 h lifetime. Reconnect the connector; the refresh is silent if you are still signed into Microsoft.
+
+---
+
 ## 4. The commands
 
-> The `/donyati-*` slash commands work in **both Claude Code and the Claude Desktop / web connector**. You can also phrase any request in plain English — see §3B. Same tools, same data, same answers.
+> The `/donyati-*` slash commands work in **Claude Code and the Claude Desktop / web connector**. **ChatGPT does not show them** — use the plain-English phrasings in §3C instead. Same tools, same data, same answers, whichever way you ask.
 
 **Talk to experts**
 
@@ -211,6 +274,7 @@ All workflow examples in §5 work identically on Desktop/web — by slash comman
 | `/donyati-ask` | Ask any platform expert | Quick fact-check, deep dive, "what's our take on X" |
 | `/donyati-compare` | Multi-agent platform comparison | Pitch prep, RFP responses, scoping |
 | `/donyati-knowledge` | Search curated knowledge base | Pull verified citations for content |
+| `/donyati-accelerators` | Search the delivery accelerator library — scripts, templates, workbooks, toolkits | Before building something Donyati has already built |
 | `/donyati-platforms` | List all platforms covered | When you don't know the right slug |
 | `/donyati-agents` | Full agent roster — platforms, industries, Donyati specialty agents | When you want the complete picture, or an industry slug for the tip below |
 
@@ -223,15 +287,25 @@ All workflow examples in §5 work identically on Desktop/web — by slash comman
 | `/donyati-clients` | List client organizations | Find the right client |
 | `/donyati-projects` | List a client's projects | Scope to one engagement |
 | `/donyati-client-search` | Search a client/project's knowledge | Meeting prep, "what do we know about X" |
-| `/donyati-add-knowledge` | Record new facts to a client/project | Right after a call or meeting |
+| `/donyati-add-knowledge` | Record new facts to a client/project (saved as drafts for admin review) | Right after a call or meeting |
 | `/donyati-briefing` | Pull a client briefing | Before a sales call or status review |
+| `/donyati-upload` | Add a document — RFP, transcript, notes — to a client/project | You have the file and want it searchable |
+| `/donyati-case-study` | Write up an engagement as a case study — drafts the internal, client-named account and the sanitized version the agents can quote. **Claude Code only**: case studies have no MCP tool, so it drafts locally and you paste into `/case-studies/new` on the platform | The work is finished and the lesson is worth keeping |
+| `/donyati-new-client` | Create a client organization | The client is not in the list yet |
+| `/donyati-new-project` | Create a project/engagement under a client | New workstream, new SOW, new assessment |
+| `/donyati-poc` | Track a proof-of-concept — create, list, move it through its stages | Work that starts as a POC before it is a project |
 
 **Deliverables** (Sales / Presales)
 
 | Command | What it does | When to use it |
 |---|---|---|
-| `/donyati-deliverables` | List and generate deliverables for a client — 8 types: RFP response (PowerPoint), executive summary, client briefing, assessment summary, custom summary (web decks), requirements, data source inventory, response repository (Word docs) | Anytime you need a client-ready artifact fast |
+| `/donyati-deliverables` | List and generate deliverables for a client — 11 types: RFP response (PowerPoint), executive summary, client briefing, assessment summary, custom summary (web decks), requirements, data source inventory, response repository (Word docs), plus swimlane, roadmap and architecture diagram (interactive HTML) | Anytime you need a client-ready artifact fast |
 | `/donyati-rfp-response` | Generate an RFP/proposal response deck (PowerPoint) | RFP due, proposal in flight |
+| `/donyati-proposals` | Answer an RFP question by question: list proposals, read the question tree, draft grounded answers with sources, accept answers, export to Word | Working an RFP question by question rather than generating a whole deck at once |
+| `/donyati-interactive` | Generate an interactive HTML deliverable — swimlane, roadmap, architecture diagram — with viewer, download and share links | A process or roadmap that reads better clickable than as a slide |
+| `/donyati-demo-assessment` | Score a vendor demo against the client's requirement areas, with a verified transcript citation behind every score | Vendor selection, platform bake-off, demo debrief — see §4.10 |
+| `/donyati-assessment` | Draft a client assessment from a project's ingested material, and check what became of the ones already drafted | You want the client to answer the questions the material does not |
+| `/donyati-review-assessment` | Expert review of an assessment template's dimensions, questions and maturity levels | Before a template goes in front of a client |
 
 For a more visual PowerPoint version of a client briefing, assessment summary, or custom
 summary, ask for `deck_style: designed`. The option is ignored by non-PowerPoint deliverables,
@@ -245,6 +319,7 @@ deck archetypes.
 | `/donyati-summarize` | Domain-aware summarization | Long SOW, meeting transcript, RFP packet |
 | `/donyati-review` | Critical expert review | A deliverable before it goes to the client |
 | `/donyati-sow-review` | Havagi CIO-style SOW/RFP audit | Before a SOW or RFP response goes to the client |
+| `/donyati-start` | Guided entry point | Your first session, or showing someone else theirs |
 | `/donyati-setup` | Verify your key (Claude Code) | First time, or after key rotation |
 | `/donyati-help` | Show all commands | Anytime |
 
@@ -341,6 +416,18 @@ Already covered in §3 Step 3. Run this:
 ```
 
 Shows all commands, grouped by team.
+
+### 4.10 `/donyati-demo-assessment` — score a vendor demo
+
+```
+/donyati-demo-assessment <client> <vendor>
+```
+
+Turns a demo transcript into a scorecard against the client's requirement areas — evidence tier
+and a verified transcript citation behind every score, with what the vendor deferred called out
+rather than counted as a gap. For vendor selections, platform bake-offs, and demo debriefs. Pull
+the transcript in from read.ai first if the demo was a recorded call, or upload it with
+`/donyati-upload`.
 
 ---
 
@@ -544,7 +631,26 @@ You should see `expert-agents` in the list. Open Claude Code and ask it to list 
 
 ---
 
-## 10. What's coming next
+## 10. Recent releases
+
+**Shipped in v2.8.0** — vendor demo scoring:
+
+- `/donyati-demo-assessment` — score a vendor's demo against the client's requirement areas,
+  with an evidence tier and a verified transcript citation behind every score (§4.10)
+- read.ai import: `connect_readai`, `list_my_readai_meetings`, `ingest_readai_meeting` — pull a
+  recorded call in as a project document without leaving the chat
+
+**Shipped in v2.7.0** — the accelerator library:
+
+- `/donyati-accelerators` — search the reusable scripts, templates, workbooks and toolkits
+  consultants have already built. Published accelerators only, so it looks empty until
+  contributors publish into it
+
+**v2.6.0 — interactive deliverables — is written but not published.** The skill and its three
+tools are on the `dev` branch; the published plugin does not carry them, which is why 2.7.0
+skipped the number rather than reusing it. When it lands you get `/donyati-interactive`, which
+authors a swimlane, roadmap or architecture diagram as a JSON spec, renders it to a
+self-contained interactive HTML page, and returns viewer, download and revocable share links.
 
 **Shipped in v2.4.0** — SOW review, agent roster, and compliance posture:
 
@@ -574,6 +680,36 @@ You should see `expert-agents` in the list. Open Claude Code and ask it to list 
 - **Usage stats** *(admins only)*: https://expert-agents.donyati.com/admin/api-usage
 - **README**: short reference at `donyati-expert-agents-plugin/README.md`
 - **Prompt templates**: copy-paste reusable prompts at `donyati-expert-agents-plugin/PROMPT_TEMPLATES.md`
+
+---
+
+## 12. Plugin reach — what is web-only, and why
+
+Not everything in the Expert Agents web app is meant to be reachable from Claude. Some of it is
+held back on purpose; some of it is a gap somebody is tracking. Without that written down, the
+two look identical from the connector — you ask for a client's contacts, nothing happens, and
+you cannot tell whether that is a bug worth reporting.
+
+This table is the answer for the features shipped between 20 August and 4 September 2026.
+Measured against the connector on 2026-09-07.
+
+| Feature | On the connector? | Why |
+|---|---|---|
+| **Client contacts** | No — web-only for now | Deliberate. The contacts design puts `/v1` sync and an MCP tool in **Phase 3, step 10**, and blocks both on a field-level precedence table being implemented first. Until an external writer knows which system wins per field, a connector write would silently overwrite a curated contact. Ask an admin, or use the Contacts tab on the client |
+| **Client references** | No | A tracked gap, not a decision: **AB#6083** covers reference search on `/v1` and MCP. Approved client references are exactly the thing you want to hand when a prospect asks who else you have done this for, so this is a real absence |
+| **Lineage read** | **Yes** — `get_lineage` | Closed since this was reported. Pass a `pocSlug` or a `projectId` and it walks the funnel behind and ahead of it, including a conversion later undone. Wrapped by `/donyati-poc` and `/donyati-projects` |
+| **Assessment proposals** | On MCP as `propose_assessment`; **not** on the `/v1` REST API | Split on purpose. Drafting and listing are conversational work and reach the connector via `/donyati-assessment`. **Pushing** a proposal makes it client-facing and **withdrawing** takes it back from respondents mid-flight; both stay signed-in acts in the admin console. The missing `/v1` route is a gap for server integrations, under **AB#6104** |
+| **Per-POC Azure cost** | Partly — `list_pocs` returns spend to a caller holding the cost permissions | Reading is reachable and gated (see `/donyati-poc`). **Administering** it is not: attributing a resource to a POC rewrites the cost map for every reader of it, and a mis-attribution stays wrong until someone notices. That stays on the mapping page |
+| **POC → SOW** | No — web-only | Deliberate. The action creates a `client_engagements` row and generates a client SOW against it, and it is guarded by a scope assertion before any write. A one-shot connector call that creates a client record as a side effect is the wrong shape for it. Start the POC from `/donyati-poc`, then generate the SOW from the POC page |
+
+**What "web-only" costs you.** Every row above marked web-only means a consultant working in
+Claude has to open a browser to finish the job. That is a real cost and it is accepted here for
+specific reasons — a write that could overwrite curated data, an act that reaches the client, or
+a side effect that creates records. It is not a general position that the connector is a
+read-only surface.
+
+**Where to file the gaps.** Reference search on the connector is AB#6083. Remaining demo
+assessment surfaces are AB#5972. Everything else on this page: ping Matt.
 
 ---
 

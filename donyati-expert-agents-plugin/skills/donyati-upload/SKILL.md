@@ -17,7 +17,15 @@ Drop a client's document into their knowledge base. The pipeline extracts struct
 
 1. Resolves the client with `list_organizations` (and a project with `list_projects` if you name one).
 2. Calls the `ingest_client_document` tool with the document's text.
-3. Reports how many knowledge items were extracted (searchable immediately via `/donyati-client-search`).
+3. Reports how many knowledge items were extracted. They are saved as **drafts pending admin
+   review**, and become searchable via `/donyati-client-search` once an admin confirms them.
+
+## Attaching a document to an assessment
+
+`ingest_client_document` takes the same four lineage fields as `add_client_knowledge` and the
+v1 ingest API — `engagementExternalId`, `assessmentRef`, `assessmentName` and `validAsOf`.
+Supply them when the document is an assessment output, so its extracted insights attach to the
+right engagement and assessment instead of landing loose at organization level.
 
 ## Examples
 

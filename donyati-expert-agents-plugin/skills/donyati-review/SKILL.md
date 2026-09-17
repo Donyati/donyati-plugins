@@ -45,3 +45,19 @@ Calls the `review_document` tool, which returns:
 ## Tip
 
 Run this on a deliverable **before** it goes to the client. Use `/donyati-summarize` instead when you just need a neutral recap.
+
+## Reviewing a client's document
+
+A review reads better when the expert knows the engagement. Before calling `review_document`:
+
+1. Call `list_organizations` (or run `/donyati-clients`) and take the `organizationId`.
+2. Optionally call `list_projects` for that org and take the `projectId`.
+3. Pass `organizationId` (and `projectId`) alongside the document.
+
+The reviewer then sees the client's **confirmed** knowledge only — a review is written to be
+shown to the client, so drafts and synthesized wiki pages are deliberately excluded. Never
+guess an id; the tool refuses an organization you are not granted.
+
+```
+/donyati-review [paste design doc] — client: Apex Manufacturing, project: FCC Phase 2
+```

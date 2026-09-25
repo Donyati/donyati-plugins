@@ -626,7 +626,7 @@ You should see `expert-agents` in the list. Open Claude Code and ask it to list 
 ## 9. Privacy & data handling
 
 - **API keys are scoped to you.** Each teammate gets a unique key. Don't share them.
-- **RBAC is live.** Your key or account only sees client organizations and engagements you've been granted access to. Admin keys and service keys have unrestricted access. Regular keys follow a "global until granted" model: you see all public data until assigned to a specific organization, then you see only that organization's knowledge.
+- **Client access is deny by default.** Everyone sees Donyati's shared platform knowledge. A client organization or engagement appears only once an admin has granted it to you; until then client searches, briefings and project lists come back empty. That is expected, not a broken connection. Admins and the all-client roles (System Admin, Knowledge Manager, All Clients) see every client. A service key (`dea_*`) sees only the organizations it was issued for, and one with no organization grant sees no client data. Ask an Expert Agents admin to add a client.
 - **Requests are logged.** Admins can see per-user / per-key usage at `/admin/api-usage` for billing and audit.
 - **Content you summarize/ingest is stored.** It can land in the knowledge base or Review Queue depending on the endpoint. Don't paste anything you wouldn't paste into the web app.
 

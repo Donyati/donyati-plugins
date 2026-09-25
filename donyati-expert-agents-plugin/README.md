@@ -201,7 +201,7 @@ Then restart Claude Code. A plain `/reload-plugins` does **not** fetch from the 
 
 ## Roles & permissions
 
-Per-caller RBAC is now live — your key or account only sees the client organizations and engagements you've been granted access to. Admin keys and service keys (`dea_*`) have unrestricted access. Regular keys operate under a "global until granted" model: until you're explicitly assigned to a client organization, you see all public data; once assigned, you see only that organization's knowledge.
+Client access is **deny by default**. Everyone sees Donyati's shared platform knowledge, but a client organization or engagement appears only once an admin has granted it to you. Until then client searches, briefings and project lists come back empty, which is expected rather than a broken connection. Admins and the all-client roles (System Admin, Knowledge Manager, All Clients) see every client. A service key (`dea_*`) sees only the organizations it was issued for, and a key with no organization grant sees no client data. To get a client added, ask an Expert Agents admin.
 
 If you ingest content via the plugin, it will be stamped with your owner email so admins can attribute submissions in the Review Queue.
 

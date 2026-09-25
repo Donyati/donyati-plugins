@@ -16,10 +16,10 @@ Use the `consult` MCP tool from the `expert-agents` server to ask a platform exp
 ## Examples
 
 ```
-/donyati-ask What are the best practices for EPBCS data integration with Snowflake?
+/donyati-ask What are the best practices for Planning data integration with Snowflake?
 /donyati-ask How does OneStream handle intercompany eliminations?
 /donyati-ask Best Anaplan vs Workday Adaptive comparison criteria for FP&A?
-/donyati-ask Compare SAP BPC vs Oracle FCCS for financial consolidation
+/donyati-ask Compare SAP BPC vs Oracle FCC for financial consolidation
 ```
 
 ## How It Works
@@ -31,9 +31,11 @@ Use the `consult` MCP tool from the `expert-agents` server to ask a platform exp
 
 ## Supported Platforms
 
-`oracle-epm`, `oracle-erp`, `oracle-integration`, `oracleai`, `sap`, `onestream`, `microsoft`, `microsoftai`, `workday`, `workdayai`, `salesforce`, `salesforceai`, `snowflake`, `snowflakeai`, `databricks`, `databricksai`, `informatica`, `stibo`, `aws`, `gcp`, `tagetik`, `anaplan`, `blackline`, `blacklineai`, `planful`, `prophix`
+`oracle-epm`, `oracle-erp`, `oracle-integration`, `oracleai`, `sap`, `onestream`, `microsoft`, `microsoftai`, `workday`, `workdayai`, `salesforce`, `salesforceai`, `snowflake`, `snowflakeai`, `databricks`, `databricksai`, `informatica`, `stibo`, `aws`, `gcp`, `tagetik`, `anaplan`, `blackline`, `blacklineai`, `planful`, `prophix`, `change-management` (Donyati practice agent — Change Management / process and adoption support)
 
 Run `/donyati-platforms` to see the live list with article counts.
+
+`change-management` is a practice agent and does not appear in `/donyati-platforms` (vendor platforms only); see `/donyati-agents` under Donyati. Not yet on the production connector — dev only until AB#6839 promotes it.
 
 ## Industry lens
 
@@ -45,6 +47,18 @@ Add an industry overlay to frame the answer in that vertical's vocabulary and st
 ```
 
 Run `/donyati-agents` to see the available industry slugs.
+
+## Donyati practice agents
+
+Donyati practice agents — firm specialties with their own curated corpus, such as Change
+Management — are asked with `platform: <slug>` exactly like a product. `/donyati-agents`
+(`list_agents`) lists them under Donyati.
+
+```
+/donyati-ask How do we handle change fatigue on a lean FP&A team — platform: change-management
+```
+
+Not yet on the production connector — dev only until AB#6839 promotes it.
 
 ## Working on a client
 

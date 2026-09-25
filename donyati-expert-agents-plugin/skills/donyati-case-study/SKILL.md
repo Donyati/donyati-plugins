@@ -133,12 +133,13 @@ publish check uses these names to catch a person surviving into the sanitized te
 
 ## Step 6 — hand it over
 
-There is no MCP tool for case studies, so this skill does not submit. Output the two faces as
-separate markdown blocks, plus the reference answers from Step 5, and tell the author to paste
-them into:
+This skill does not submit on its own. Output the two faces as separate markdown blocks, plus
+the reference answers from Step 5. Then offer the author two ways in:
 
-**https://expert-agents.donyati.com/case-studies/new** — also reachable from **Knowledge →
-Case Studies** in the nav.
+- **From Claude:** `/donyati-contribute case-study` sends both faces through `submit_case_study`
+  and puts it in the review queue. The reference answers still go in on the web afterwards.
+- **On the web:** paste them into **https://expert-agents.donyati.com/case-studies/new**, also
+  reachable from **Knowledge → Case Studies** in the nav.
 
 Then tell them what happens next, because it is not obvious and it catches people out:
 

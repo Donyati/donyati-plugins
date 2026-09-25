@@ -1,6 +1,6 @@
 # Donyati Expert Agents — Plugin Usage Guide
 
-**Version:** 2.10.0  ·  **Audience:** Sales / Presales / Marketing / Customer Success  ·  **Last updated:** 2026-09-17
+**Version:** 2.11.0  ·  **Audience:** Sales / Presales / Marketing / Customer Success  ·  **Last updated:** 2026-09-25
 
 This guide walks you from "I want to use this" to "I'm getting real work done from Claude" in under five minutes. Complements the README (quick reference) with troubleshooting, role-based workflow examples, and what to do when something goes wrong.
 
@@ -290,7 +290,8 @@ The `/donyati-*` commands are MCP **prompts**. Claude surfaces those; ChatGPT do
 | `/donyati-add-knowledge` | Record new facts to a client/project (saved as drafts for admin review) | Right after a call or meeting |
 | `/donyati-briefing` | Pull a client briefing | Before a sales call or status review |
 | `/donyati-upload` | Add a document — RFP, transcript, notes — to a client/project | You have the file and want it searchable |
-| `/donyati-case-study` | Write up an engagement as a case study — drafts the internal, client-named account and the sanitized version the agents can quote. **Claude Code only**: case studies have no MCP tool, so it drafts locally and you paste into `/case-studies/new` on the platform | The work is finished and the lesson is worth keeping |
+| `/donyati-case-study` | Write up an engagement as a case study — drafts the internal, client-named account and the sanitized version the agents can quote. **Claude Code only**: it drafts locally; submit the result with `/donyati-contribute` or paste it into `/case-studies/new` on the platform | The work is finished and the lesson is worth keeping |
+| `/donyati-contribute` | Submit an accelerator, internal doc or case study for review; resubmit one sent back; list your submissions and their status. Files are scanned first: a blocked upload is never submitted | You built something reusable, or a reviewer asked for changes |
 | `/donyati-new-client` | Create a client organization | The client is not in the list yet |
 | `/donyati-new-project` | Create a project/engagement under a client | New workstream, new SOW, new assessment |
 | `/donyati-poc` | Track a proof-of-concept — create, list, move it through its stages | Work that starts as a POC before it is a project |
@@ -632,6 +633,14 @@ You should see `expert-agents` in the list. Open Claude Code and ask it to list 
 ---
 
 ## 10. Recent releases
+
+**Shipped in v2.11.0** — contribute from Claude:
+
+- `/donyati-contribute` — submit an accelerator, internal doc or case study for review, or check
+  where your submissions stand. Tools: `submit_accelerator`, `submit_internal_doc`,
+  `submit_case_study`, `list_my_submissions`. Same scan and review queue as **Knowledge ›
+  Contribute** on the web; nothing is published until an approver says so. Needs a signed-in
+  person, not a service key.
 
 **Shipped in v2.8.0** — vendor demo scoring:
 

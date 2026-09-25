@@ -85,7 +85,7 @@ Turn a demo transcript into a defensible scorecard. Calls the `assess_vendor_dem
 | `areas` | The requirement areas, in report order. `weight` defaults to `important`. See below on `detail` |
 | `list` | `true` lists the scorecards already generated for that project. **`projectId` is required with it** — a listing is per project, not per client |
 | `assessmentId` | Re-read an existing scorecard, or correct it when `operation` is set |
-| `operation` | `edit-row`, `reweight` or `set-status` — see Correcting a scorecard |
+| `operation` | `edit-row`, `undo-row`, `reweight`, `set-status` or `delete` — see Correcting a scorecard |
 | `additionalInstructions` | Extra scoring guidance |
 
 ## `detail` is what makes the scorecard specific
@@ -146,6 +146,7 @@ tool, without leaving the conversation: pass the `assessmentId` plus an `operati
 | `undo-row` | `rowId` only | Put that row back the way it stood before its last correction |
 | `reweight` | `areaId`, `weight` | Change one area's weight; the weighted total moves, the plain mean does not |
 | `set-status` | `status: "final"` or `"draft"` | Finalize the scorecard, or reopen a final one for correction |
+| `delete` | nothing else | Remove the scorecard and every area, row and follow-up in it. Permanent, and refused on a final one until it is reopened |
 
 Row and area ids come off the scorecard the tool returns. To find an assessment you generated
 earlier, call the tool with `list: true` plus **both** the `organizationId` and the `projectId` —
@@ -178,16 +179,22 @@ with no such note was simply never evidenced; nothing was claimed about it.
 row exactly as it was, with who changed it and when, before overwriting it. `undo-row` with just
 a `rowId` puts that row back. This matters most where the edit is least recoverable: a row moved
 off `deferred` loses its score outright, and the stored pre-image is the only copy of it. The
-undo is itself recorded, so undoing twice steps two corrections back rather than ping-ponging.
-The same Undo control is on the scorecard in the web app, against any row that has been corrected.
+undo is itself recorded, and each undo takes the newest correction that has not already been
+undone — so on a row corrected twice, undoing twice walks it back two corrections rather than
+ping-ponging between the last two. Once every correction on a row has been undone, `undo-row`
+answers that there is nothing to undo rather than re-applying one.
+The same Undo control is on the scorecard in the web app, against any row with a correction still
+standing.
 
 **A final scorecard is locked.** Once `set-status: "final"` has been set, `edit-row`, `undo-row`
 and `reweight` are all refused until you reopen it with `set-status: "draft"`. The reply says so
 rather than silently applying the change.
 
-**Deleting** an assessment is web-only, by design: it cascades to every row, and every row
-quotes the client's transcript verbatim. Open the link the tool returns, under Document
-Workspace → Deliverables.
+**Deleting** cascades to every row, and every row quotes the client's transcript verbatim — so
+`operation: "delete"` removes all of it, and there is no undo. A `final` scorecard is refused
+until it is reopened with `set-status: "draft"`, which makes deleting something that has been
+sent a deliberate two-step act. A run still being scored is refused too; a run that **failed**
+can be deleted, which is what to do with the empty scorecard a failed run leaves behind.
 
 ## Who can run it
 

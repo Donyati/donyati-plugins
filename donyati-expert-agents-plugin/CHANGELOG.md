@@ -2,6 +2,34 @@
 
 All notable changes to the Donyati Expert Agents plugin are documented here. Version numbering follows [Semantic Versioning](https://semver.org/).
 
+## [2.11.0] — 2026-09-25
+
+The MCP tools below are already live: they reached production with the AB#6914 promotion
+(PR 3975). This release is what puts the new command in front of plugin users.
+
+### Added
+- **`/donyati-contribute` — contribute to the knowledge base from Claude (AB#6920).** Submit an
+  accelerator, an internal doc or a case study for review, resubmit one a reviewer sent back, or
+  check where your submissions stand. It drives four new MCP tools — `submit_accelerator`,
+  `submit_internal_doc`, `submit_case_study` and `list_my_submissions` — that run the same code
+  as **Knowledge › Contribute** on the web, so ownership, the upload scan and the review queue
+  are identical. Registered as a prompt, so it appears in Claude Desktop and claude.ai as well
+  as Claude Code.
+- Every file is scanned for credentials and client identifiers before anything is submitted.
+  A **blocked** upload is never submitted and cannot be overridden from Claude; one with
+  **warnings** goes in only after you confirm the findings. Nothing is published until an
+  approver says so.
+
+### Changed
+- **`/donyati-case-study` can now hand off to `/donyati-contribute`.** It still drafts both faces
+  locally (it needs Claude Code), and the finished draft can be submitted with `submit_case_study`
+  instead of being pasted into the web form. The web form still works.
+- `/donyati-help` lists the new command.
+
+### Notes
+- A contribution needs a **person** as its owner, so a service (`dea_`) key is refused. Sign in
+  through the connector, or use a personal key.
+
 ## [2.10.0] — 2026-09-17
 
 **Note:** the MCP server this plugin talks to is production. Nothing below is live for plugin

@@ -1,0 +1,33 @@
+{
+  "_comment": [
+    "Append-only ledger of every Expert Agents plugin version that has been cut.",
+    "It exists because a version can be lost without anyone noticing: 9409506b cut 2.9.0 on",
+    "main and published it, then the AB#6296 promotion tail ported dev's plugin.json over main",
+    "and took the version back to 2.8.0, dropping the 2.9.0 CHANGELOG entry with it. The",
+    "marketplace served 2.9.0 while both branches read 2.8.0 for nine days and nothing failed.",
+    "",
+    "NEVER remove an entry. Adding one is part of cutting a release, alongside plugin.json,",
+    "CHANGELOG.md, README.md and USAGE_GUIDE.md. The guard is",
+    "frontend/lib/mcp/__tests__/plugin-version-ledger.test.ts."
+  ],
+  "released": [
+    { "version": "1.0.0", "date": "2025-05-15" },
+    { "version": "1.1.0", "date": "2025-06-20" },
+    { "version": "1.2.0", "date": "2025-07-05" },
+    { "version": "1.3.0", "date": "2025-08-10" },
+    { "version": "1.4.0", "date": "2025-10-15" },
+    { "version": "2.0.0", "date": "2026-05-20" },
+    { "version": "2.1.0", "date": "2026-06-01" },
+    { "version": "2.2.0", "date": "2026-06-15" },
+    { "version": "2.3.0", "date": "2026-07-03" },
+    { "version": "2.4.0", "date": "2026-07-12" },
+    { "version": "2.4.1", "date": "2026-08-02" },
+    { "version": "2.5.0", "date": "2026-08-05" },
+    { "version": "2.6.0", "date": "2026-08-18" },
+    { "version": "2.7.0", "date": "2026-08-25" },
+    { "version": "2.8.0", "date": "2026-09-01" },
+    { "version": "2.9.0", "date": "2026-09-07", "note": "cut on main, published, then reverted out of the repo by a promotion; restored 2026-09-17" },
+    { "version": "2.10.0", "date": "2026-09-17", "note": "published to the marketplace 2026-09-17" },
+    { "version": "2.11.0", "date": "2026-09-25" }
+  ]
+}

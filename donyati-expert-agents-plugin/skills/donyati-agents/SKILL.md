@@ -19,7 +19,7 @@ No arguments. Calls the `list_agents` tool and presents the roster.
 
 - **Products** — platform experts (Oracle EPM, SAP, Snowflake, …) → ask via `/donyati-ask`
 - **Industries** — vertical experts (insurance, manufacturing, retail, …) → ask via `/donyati-ask <question> — industry: <slug>` (stacks an industry lens on the platform answer)
-- **Donyati** — firm specialty agents (Havagi SOW reviewer → `/donyati-sow-review`)
+- **Donyati** — firm specialty agents (Havagi SOW reviewer → `/donyati-sow-review`; practice agents such as Change Management → `/donyati-ask … — platform: change-management`)
 
 ## When to use
 

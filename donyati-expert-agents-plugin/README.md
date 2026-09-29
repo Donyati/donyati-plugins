@@ -1,6 +1,6 @@
 # Donyati Expert Agents — Claude Plugin
 
-**v2.11.0** — Access Donyati's 26+ AI expert agents and client knowledge from **Claude Code**, **Claude Desktop**, **claude.ai web**, or **ChatGPT**.
+**v2.12.0** — Access Donyati's 26+ AI expert agents and client knowledge from **Claude Code**, **Claude Desktop**, **claude.ai web**, or **ChatGPT**.
 
 Built for Sales, Marketing, Presales, and Customer Success teammates who want to consult expert agents, compare platforms, summarize documents, and search Donyati's verified knowledge base directly from Claude — terminal, desktop app, or browser.
 
@@ -49,7 +49,7 @@ You should see your key name, owner email, and rate limit. If you do, you're don
 
 ---
 
-## Commands (v2.11.0)
+## Commands (v2.12.0)
 
 **Talk to experts**
 
@@ -61,6 +61,7 @@ You should see your key name, owner email, and rate limit. If you do, you're don
 | `/donyati-accelerators` | Search Donyati's delivery accelerator library — scripts, templates, workbooks, toolkits |
 | `/donyati-platforms` | List all platforms we cover with article counts |
 | `/donyati-agents` | Full agent roster — platforms, industries, Donyati specialty agents |
+| `/donyati-client-agent` | Ask a client's own published assistant a question as one of their users would — documents-only, persona-framed |
 
 > **Tip:** add `— industry: insurance` (or any slug from `/donyati-agents`) to `/donyati-ask` for an industry-framed answer — 16 verticals supported.
 

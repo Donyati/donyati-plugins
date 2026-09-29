@@ -1,6 +1,6 @@
 # Donyati Expert Agents — Plugin Usage Guide
 
-**Version:** 2.11.0  ·  **Audience:** Sales / Presales / Marketing / Customer Success  ·  **Last updated:** 2026-09-25
+**Version:** 2.12.0  ·  **Audience:** Sales / Presales / Marketing / Customer Success  ·  **Last updated:** 2026-09-27
 
 This guide walks you from "I want to use this" to "I'm getting real work done from Claude" in under five minutes. Complements the README (quick reference) with troubleshooting, role-based workflow examples, and what to do when something goes wrong.
 
@@ -633,6 +633,13 @@ You should see `expert-agents` in the list. Open Claude Code and ask it to list 
 ---
 
 ## 10. Recent releases
+
+**Shipped in v2.12.0** — client agents:
+
+- `/donyati-client-agent` — ask a client's own published assistant a question as one of their
+  users would. `consult` takes `clientAgent: <slug>` with `organizationId`; the answer is grounded
+  on the client's documents only and framed for a persona (`end-user`, `administrator`, or the
+  agent's own). Questions no document answered are logged for the client admin.
 
 **Shipped in v2.11.0** — contribute from Claude:
 

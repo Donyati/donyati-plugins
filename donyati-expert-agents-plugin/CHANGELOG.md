@@ -2,6 +2,17 @@
 
 All notable changes to the Donyati Expert Agents plugin are documented here. Version numbering follows [Semantic Versioning](https://semver.org/).
 
+## [2.12.0] — 2026-09-27
+
+### Added
+- **`/donyati-client-agent` — ask a client's own assistant as one of their users would (AB#6912).**
+  `consult` takes `clientAgent: <slug>` alongside `organizationId`: the expert platform comes
+  from the agent, the persona defaults to its first one, and the answer is grounded on the
+  client's documents only — the same experience the client gets in the portal and at
+  `/c/<slug>`. Registered as a prompt, so it appears in Claude Desktop and claude.ai as well as
+  Claude Code. Every persona answer is counted per client agent, and a question no client
+  document answered is logged for the client's admin as an unanswered question.
+
 ## [2.11.0] — 2026-09-25
 
 The MCP tools below are already live: they reached production with the AB#6914 promotion

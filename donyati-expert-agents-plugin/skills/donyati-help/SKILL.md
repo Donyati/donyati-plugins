@@ -40,6 +40,7 @@ This plugin connects Claude to Donyati's Expert Agents platform (`expert-agents.
 |---|---|
 | `/donyati-accelerators <query>` | Search delivery accelerators — reusable scripts, templates, workbooks, toolkits (filter by platform/category) |
 | `/donyati-contribute [type]` | Submit an accelerator, internal doc or case study for review, resubmit one sent back, or check your submissions |
+| `/donyati-client-agent <client> — <question>` | Ask a client's own published assistant as one of their users would (documents-only, persona-framed) |
 
 ## Deliverables (Sales / Presales)
 

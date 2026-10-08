@@ -1,6 +1,6 @@
 # Donyati Expert Agents — Plugin Usage Guide
 
-**Version:** 2.12.0  ·  **Audience:** Sales / Presales / Marketing / Customer Success  ·  **Last updated:** 2026-09-27
+**Version:** 2.13.0  ·  **Audience:** Sales / Presales / Marketing / Customer Success  ·  **Last updated:** 2026-10-08
 
 This guide walks you from "I want to use this" to "I'm getting real work done from Claude" in under five minutes. Complements the README (quick reference) with troubleshooting, role-based workflow examples, and what to do when something goes wrong.
 
@@ -633,6 +633,14 @@ You should see `expert-agents` in the list. Open Claude Code and ask it to list 
 ---
 
 ## 10. Recent releases
+
+**Shipped in v2.13.0** — Idea Board:
+
+- `/donyati-poc` describes the Idea Board behind every POC: `create_poc` takes an optional
+  `practice` (EPM, Data, AI, ERP, All) for the idea it creates, and a POC is either a
+  **prototype** (internal, no client) or a **POC** (with a client).
+- New tools `list_ideas`, `submit_idea`, `update_idea` and `idea_report`. Same rules as the
+  Idea Board on the web: you edit your own idea while it is New, managers edit any.
 
 **Shipped in v2.12.0** — client agents:
 

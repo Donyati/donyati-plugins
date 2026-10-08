@@ -1,6 +1,6 @@
 ---
 name: donyati-poc
-description: Track proofs-of-concept and demos centrally — create one, list what exists for a client, and move a POC through its stages (idea through graduated, parked, or killed) instead of leaving it in a project folder.
+description: Track proofs-of-concept and demos centrally — create one, list what exists for a client, and move a POC through its stages (approved through graduated, parked, or killed) instead of leaving it in a project folder.
 ---
 
 # /donyati-poc — Track a Proof-of-Concept or Demo
@@ -28,13 +28,42 @@ record from the first conversation, so it is visible outside whoever is running 
 ## Stages
 
 ```
-idea → approved → building → piloting → converting → graduated
-                                       ↘ parked
-                                       ↘ killed
+approved → building → piloting → converting → graduated
+                                ↘ parked
+                                ↘ killed
 ```
 
-`graduated` means the POC became a real product. Azure spend tracking only turns on from
-`approved` onward — an `idea` has nothing to meter yet.
+`graduated` means the POC became a real product. There is no `idea` stage any more:
+`update_poc` refuses it, because ideas now live on the Idea Board and a POC starts at `approved`.
+
+### Prototype or POC
+
+Every row has a `kind`. A **POC** is tested with a client, so it needs a client
+`organizationId`; without one, create a **prototype** (an internal build) instead.
+
+### The idea behind it
+
+Every POC and prototype tests an idea on the Idea Board. Pass `ideaId` to `create_poc` to promote
+a qualified idea; omit it and an idea is created alongside, so the funnel stays complete. That
+idea takes `create_poc`'s optional `practice`: `epm`, `data`, `ai`, `erp`, or `all` for a
+cross-practice idea. Omit it when unsure and the idea is **Unassigned**. `practice` is refused
+together with `ideaId`, because an existing idea keeps its own.
+
+Ideas that are not ready for a POC go on the board directly:
+
+- `list_ideas` finds ideas and their slugs (filter by `practice`, `unassigned` included, `status`,
+  `search`, or `mine`). Call it before submitting, to avoid a duplicate.
+- `submit_idea` adds one as **New**, owned by you, with an optional `practice`.
+- `update_idea` edits one by `slug`, including setting `practice` or clearing it with `null`. You
+  can edit your own idea while it is New; after that it takes Idea Board (Manage). Qualifying,
+  declining and merging stay on `/admin/ideas`.
+- `idea_report` returns the Idea Board report as JSON (funnel, time in stage, conversion, aging,
+  demand), filtered by `practice`, `source` and a `from`/`to` creation-day window. It needs Idea
+  Board (View).
+
+All four act as you. With the Claude Code plugin's personal `dea_` key, that means the key's owner
+and the owner's permissions; the key needs the `knowledge` scope, and a key with no active owner is
+refused. A client-linked idea you are not allowed to see answers as not found.
 
 ### Two rules `update_poc` will refuse you on
 

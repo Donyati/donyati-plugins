@@ -1,6 +1,6 @@
 ---
 name: donyati-contribute
-description: Contribute to the Donyati knowledge base from Claude — submit an accelerator, an internal doc or a case study for review, resubmit one a reviewer sent back, or check where your submissions stand.
+description: Contribute to the Donyati knowledge base from Claude — submit an accelerator, an internal doc, a case study or a gateway skill for review, resubmit one a reviewer sent back, or check where your submissions stand.
 ---
 
 # /donyati-contribute — Submit an Accelerator, Internal Doc or Case Study
@@ -67,6 +67,21 @@ Then send `title`, `domainId` and **both versions**:
   check it before you submit.
 
 To submit a draft already written on the web, pass `caseStudyId` instead.
+
+## Gateway skill: `submit_gateway_skill`
+
+A skill (a `SKILL.md`, optionally with reference files) for a client project's organization,
+reviewed before any project is served it. You must be a member of the project's EPM gateway.
+
+- New: `engagementId` (from `list_projects`) and either `skillMd` (the text of `SKILL.md`, with
+  `name` and `description` in its frontmatter) or `files` (one `.zip` of the skill folder, or
+  `SKILL.md` and its files). Optional `changeNote` for the reviewer.
+- New version of one you submitted: add `skillId`.
+- Status and reviewer notes: `list_my_skill_submissions` with the `engagementId`.
+
+The upload is scanned for credentials first. A skill that contains one is refused and the
+findings name the rule, file and line: tell the user to remove it, never to rephrase it past the
+scan. After review a gateway admin publishes it and it is activated for the project.
 
 ## What gets refused
 

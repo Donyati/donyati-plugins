@@ -2,6 +2,24 @@
 
 All notable changes to the Donyati Expert Agents plugin are documented here. Version numbering follows [Semantic Versioning](https://semver.org/).
 
+## [2.13.0] — 2026-10-08
+
+The MCP tools below reach production with the Idea Board promotion. This release is what
+updates the `/donyati-poc` instructions plugin users see.
+
+### Added
+- **Idea Board tools (AB#7762, AB#7751).** `list_ideas`, `submit_idea`, `update_idea` and
+  `idea_report` run the same code as the Idea Board on the web: you can edit your own idea while
+  it is New, Idea Board managers can edit any, and ideas linked to a client POC stay hidden from
+  people who cannot see POCs. `update_idea` sets or clears an idea's practice (EPM, Data, AI,
+  ERP, All); `idea_report` returns the funnel, time in stage, conversion, aging and demand.
+
+### Changed
+- **`/donyati-poc` (AB#7561, AB#7738).** POCs no longer have an `idea` stage; every POC starts
+  from an idea on the Idea Board. A POC is a **prototype** (internal, no client) or a **POC**
+  (needs a client organization). `create_poc` takes an optional `practice` for the idea it
+  creates alongside the POC.
+
 ## [2.12.0] — 2026-09-27
 
 ### Added

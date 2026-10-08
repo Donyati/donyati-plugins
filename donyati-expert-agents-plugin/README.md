@@ -1,6 +1,6 @@
 # Donyati Expert Agents — Claude Plugin
 
-**v2.12.0** — Access Donyati's 26+ AI expert agents and client knowledge from **Claude Code**, **Claude Desktop**, **claude.ai web**, or **ChatGPT**.
+**v2.13.0** — Access Donyati's 26+ AI expert agents and client knowledge from **Claude Code**, **Claude Desktop**, **claude.ai web**, or **ChatGPT**.
 
 Built for Sales, Marketing, Presales, and Customer Success teammates who want to consult expert agents, compare platforms, summarize documents, and search Donyati's verified knowledge base directly from Claude — terminal, desktop app, or browser.
 
@@ -49,7 +49,7 @@ You should see your key name, owner email, and rate limit. If you do, you're don
 
 ---
 
-## Commands (v2.12.0)
+## Commands (v2.13.0)
 
 **Talk to experts**
 
